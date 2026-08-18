@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+
+<html :class="{ 'dark' : darkMode === true }" data-content_root="../../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
+<head>
+<script>
+    (function () {
+      // Set initial color scheme
+      if ((localStorage.getItem("_x_darkMode") === "true") || (window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+      }
+
+      // Watch for media preference changes
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+        localStorage.setItem("_x_darkMode", event.matches);
+        document.documentElement.classList.toggle("dark", event.matches);
+      });
+    })();
+  </script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Writing Tests | php-src docs</title>
+<meta content="Writing Tests | php-src docs" property="og:title"/>
+<meta content="Writing Tests | php-src docs" name="twitter:title"/>
+<link href="../../_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
+<link href="../../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/code-no-font-ligatures.css?v=7445b7a4" rel="stylesheet" type="text/css"/>
+<link href="../../_static/awesome-sphinx-design.css?v=a81faafa" rel="stylesheet" type="text/css"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="../../genindex.html" rel="index" title="Index"/>
+<link href="sections/index.html" rel="next" title="Sections"/>
+<link href="../running-tests/index.html" rel="prev" title="Running Tests"/>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-xs border-border bg-background/90 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="../../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">php-src docs</span>
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 gap-2 sm:gap-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center gap-1">
+<a href="https://github.com/php/php-src" rel="noopener nofollow" title="Visit repository on GitHub">
+<div class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9">
+<svg fill="currentColor" height="26px" style="margin-top:-2px;display:inline" viewbox="0 0 45 44" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.477.927C10.485.927.76 10.65.76 22.647c0 9.596 6.223 17.736 14.853 20.608 1.087.2 1.483-.47 1.483-1.047 0-.516-.019-1.881-.03-3.693-6.04 1.312-7.315-2.912-7.315-2.912-.988-2.51-2.412-3.178-2.412-3.178-1.972-1.346.149-1.32.149-1.32 2.18.154 3.327 2.24 3.327 2.24 1.937 3.318 5.084 2.36 6.321 1.803.197-1.403.759-2.36 1.379-2.903-4.823-.548-9.894-2.412-9.894-10.734 0-2.37.847-4.31 2.236-5.828-.224-.55-.969-2.759.214-5.748 0 0 1.822-.584 5.972 2.226 1.732-.482 3.59-.722 5.437-.732 1.845.01 3.703.25 5.437.732 4.147-2.81 5.967-2.226 5.967-2.226 1.185 2.99.44 5.198.217 5.748 1.392 1.517 2.232 3.457 2.232 5.828 0 8.344-5.078 10.18-9.916 10.717.779.67 1.474 1.996 1.474 4.021 0 2.904-.027 5.247-.027 5.96 0 .58.392 1.256 1.493 1.044C37.981 40.375 44.2 32.24 44.2 22.647c0-11.996-9.726-21.72-21.722-21.72" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+</a>
+<button @click="darkMode = !darkMode" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" title="Toggle color scheme" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="justify-start text-sm md:!hidden bg-background" href="../../index.html"><span class="font-bold text-clip whitespace-nowrap">php-src docs</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/high-level-overview.html">High-level overview</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../introduction/ides/index.html">IDEs<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/ides/visual-studio-code.html">Visual Studio Code</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../core/data-structures/index.html">Data Structures<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../core/data-structures/zval.html">zval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/data-structures/zend_string.html">zend_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/data-structures/zend_constant.html">zend_constant</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../core/memory-management/index.html">Memory Management<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../core/memory-management/reference-counting.html">Reference Counting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../core/output-buffering.html">Output Buffering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../core/streams/index.html">Streams</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extensions/parameter-parsing.html">Parameter Parsing</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../extensions/bundled-extensions.html">Bundled Extensions<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../extensions/bundled-extensions/filter.html">ext/filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../extensions/unbundled-extensions.html">Unbundled Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests/index.html">Running Tests</a></li>
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="current reference internal expandable" href="#">Writing Tests<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/index.html">Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples/index.html">Samples</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../miscellaneous/stubs.html">Stubs</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../index.html">
+<span class="hidden md:inline">php-src docs</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Writing Tests</span>
+</nav>
+<div id="content" role="main">
+<section id="writing-tests">
+<h1>Writing Tests<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#writing-tests"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+
+<p>The first thing you need to know about tests is that we need more!!! Although PHP works just great
+99.99% of the time, not having a very comprehensive test suite means that we take more risks every
+time we add to or modify the PHP implementation. The second thing you need to know is that if you
+can write PHP you can write tests. Thirdly — we are a friendly and welcoming community, don’t be
+scared about writing to (<a class="reference external" href="mailto:php-qa%40lists.php.net">php-qa<span>@</span>lists<span>.</span>php<span>.</span>net</a>) — we won’t bite!</p>
+<p>So what are phpt tests?</p>
+<blockquote>
+<div><p>A phpt test is a little script used by the php internal and quality assurance teams to test PHP’s
+functionality. It can be used with new releases to make sure they can do all the things that
+previous releases can, or to help find bugs in current releases. By writing phpt tests you are
+helping to make PHP more stable.</p>
+</div></blockquote>
+<p>What skills are needed to write a phpt test?</p>
+<blockquote>
+<div><p>All that is really needed to write a phpt test is a basic understanding of the PHP language, a
+text editor, and a way to get the results of your code. That is it. So if you have been writing
+and running PHP scripts already — you have everything you need.</p>
+</div></blockquote>
+<p>What do you write phpt tests on?</p>
+<blockquote>
+<div><p>Basically you can write a phpt test on one of the various php functions available. You can write
+a test on a basic language function (a string function or an array function) , or a function
+provided by one of PHP’s numerous extensions (a mysql function or a image function or a mcrypt
+function).</p>
+<p>You can find out what functions already have phpt tests by looking in the <a class="reference external" href="https://github.com/php/php-src">html version</a> of the git repository (<code class="docutils literal notranslate"><span class="pre">ext/standard/tests/</span></code> is a good place
+to start looking — though not all the tests currently written are in there).</p>
+<p>If you want more guidance than that you can always ask the PHP Quality Assurance Team on their
+mailing list (<a class="reference external" href="mailto:php-qa%40lists.php.net">php-qa<span>@</span>lists<span>.</span>php<span>.</span>net</a>) where they would like you to direct your attentions.</p>
+</div></blockquote>
+<p>How is a phpt test used?</p>
+<blockquote>
+<div><p>When a test is called by the <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> script it takes various parts of the phpt file to
+name and create a .php file. That .php file is then executed. The output of the .php file is then
+compared to a different section of the phpt file. If the output of the script “matches” the
+output provided in the phpt script — it passes.</p>
+</div></blockquote>
+<p>What should a phpt test do?</p>
+<blockquote>
+<div><p>Basically — it should try and break the PHP function. It should check not only the functions
+normal parameters, but it should also check edge cases. Intentionally generating an error is
+allowed and encouraged.</p>
+</div></blockquote>
+<section id="naming-conventions">
+<h2>Naming Conventions<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#naming-conventions" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#naming-conventions'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Phpt tests follow a very strict naming convention. This is done to easily identify what each phpt
+test is for. Tests should be named according to the following list:</p>
+<ul class="simple">
+<li><p>Tests for bugs</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bug&lt;bugid&gt;.phpt</span></code> (<code class="docutils literal notranslate"><span class="pre">bug17123.phpt</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Tests for a function’s basic behaviour</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;functionname&gt;_basic.phpt</span></code> (<code class="docutils literal notranslate"><span class="pre">dba_open_basic.phpt</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Tests for a function’s error behaviour</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;functionname&gt;_error.phpt</span></code> (<code class="docutils literal notranslate"><span class="pre">dba_open_error.phpt</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Tests for variations in a function’s behaviour</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;functionname&gt;_variation.phpt</span></code> (<code class="docutils literal notranslate"><span class="pre">dba_open_variation.phpt</span></code>)</p></li>
+</ul>
+</li>
+<li><p>General tests for extensions</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;extname&gt;&lt;no&gt;.phpt</span></code> (<code class="docutils literal notranslate"><span class="pre">dba_003.phpt</span></code>)</p></li>
+</ul>
+</li>
+</ul>
+<p>The convention of using _basic, _error and _variation was introduced when we found that writing a
+single test case for each function resulted in unacceptably large test cases. It’s quite hard to
+debug problems when the test case generates 100s of lines of output.</p>
+<p>The “basic” test case for a function should just address the single most simple thing that the
+function is designed to do. For example, if writing a test for the sin() function a basic test would
+just be to check that sin() returns the correct values for some known angles — eg 30, 90, 180.</p>
+<p>The “error” tests for a function are test cases which are designed to provoke errors, warnings or
+notices. There can be more than one error case, if so the convention is to name the test cases
+mytest_error1.phpt, mytest_error2.phpt and so on.</p>
+<p>The “variation” tests are any tests that don’t fit into “basic” or “error” tests. For example one
+might use a variation tests to test boundary conditions.</p>
+</section>
+<section id="how-big-is-a-test-case">
+<h2>How big is a test case?<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#how-big-is-a-test-case" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#how-big-is-a-test-case'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Small. Really — the smaller the better, a good guide is no more than 10 lines of output. The reason
+for this is that if we break something in PHP and it breaks your test case we need to be able to
+find out quite quickly what we broke, going through 1000s of line of test case output is not easy.
+Having said that it’s sometimes just not practical to stay within the 10 line guideline, in this
+case you can help a lot by commenting the output. You may find plenty of much longer tests in PHP -
+the small tests message is something that we learnt over time, in fact we are slowly going through
+and splitting tests up when we need to.</p>
+</section>
+<section id="comments">
+<h2>Comments<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#comments" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#comments'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Comments help. Not an essay — just a couple of lines on what the objective of the test is. It may
+seem completely obvious to you as you write it, but it might not be to someone looking at it later
+on.</p>
+</section>
+<section id="minimal-test-layout">
+<h2>Minimal Test Layout<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#minimal-test-layout" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#minimal-test-layout'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>A test must contain the sections TEST, FILE and either EXPECT or EXPECTF at a minimum. The example
+below illustrates a minimal test.</p>
+<p><em>ext/standard/tests/strings/strtr.phpt</em></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nb">strtr</span><span class="p">()</span> <span class="k">function</span> <span class="nf">—</span> <span class="nx">basic</span> <span class="nx">test</span> <span class="k">for</span> <span class="nb">strtr</span><span class="p">()</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-4"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-5"><span class="cm">/* Do not change this test it is a README.TESTING example. */</span>
+</span><span id="line-6"><span class="nv">$trans</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"hello"</span><span class="o">=&gt;</span><span class="s2">"hi"</span><span class="p">,</span> <span class="s2">"hi"</span><span class="o">=&gt;</span><span class="s2">"hello"</span><span class="p">,</span> <span class="s2">"a"</span><span class="o">=&gt;</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"world"</span><span class="o">=&gt;</span><span class="s2">"planet"</span><span class="p">);</span>
+</span><span id="line-7"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">strtr</span><span class="p">(</span><span class="s2">"# hi all, I said hello world! #"</span><span class="p">,</span> <span class="nv">$trans</span><span class="p">));</span>
+</span><span id="line-8"><span class="cp">?&gt;</span>
+</span><span id="line-9"><span class="x">--EXPECT--</span>
+</span><span id="line-10"><span class="x">string(32) "# hello All, I sAid hi planet! #"</span>
+</span></code></pre></div>
+</div>
+<p>As you can see the file is divided into several sections. The TEST section holds a one line title of
+the phpt test, this should be a simple description and shouldn’t ever exceed one line, if you need
+to write more explanation add comments in the body of the test case. The phpt files name is used
+when generating a .php file. The FILE section is used as the body of the .php file, so don’t forget
+to open and close your php tags. The EXPECT section is the part used as a comparison to see if the
+test passes. It is a good idea to generate output with var_dump() calls.</p>
+</section>
+<section id="analyzing-failures">
+<h2>Analyzing Failures<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#analyzing-failures" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#analyzing-failures'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>While writing tests you will probably run into tests not passing while you think they should. The
+‘make test’ command provides you with debug information. Several files will be added per test in the
+same directory as the .phpt file itself. Considering your test file is named foo.phpt, these files
+provide you with information that can help you find out what went wrong:</p>
+<p>foo.diff</p>
+<blockquote>
+<div><p>A diff file between the expected output (be it in EXPECT, EXPECTF or another option) and the
+actual output.</p>
+</div></blockquote>
+<p>foo.exp</p>
+<blockquote>
+<div><p>The expected output.</p>
+</div></blockquote>
+<p>foo.log</p>
+<blockquote>
+<div><p>A log containing expected output, actual output and results. Most likely very similar to info in
+the other files.</p>
+</div></blockquote>
+<p>foo.out</p>
+<blockquote>
+<div><p>The actual output of your .phpt test part.</p>
+</div></blockquote>
+<p>foo.php</p>
+<blockquote>
+<div><p>The php code that was executed for this test.</p>
+</div></blockquote>
+<p>foo.sh</p>
+<blockquote>
+<div><p>An executable file that executes the test for you as it was executed during failure.</p>
+</div></blockquote>
+</section>
+<section id="testing-your-test-cases">
+<h2>Testing your test cases<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#testing-your-test-cases" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#testing-your-test-cases'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Most people who write tests for PHP don’t have access to a huge number of operating systems but the
+tests are run on every system that runs PHP. It’s good to test your test on as many platforms as you
+can — Linux and Windows are the most important, it’s increasingly important to make sure that tests
+run on 64 bit as well as 32 bit platforms. If you only have access to one operating system — don’t
+worry, if you have karma, commit the test but watch <a class="reference external" href="mailto:php-qa%40lists.php.net">php-qa<span>@</span>lists<span>.</span>php<span>.</span>net</a> for reports of failures on
+other platforms. If you don’t have karma to commit have a look at the next section.</p>
+<p>When you are testing your test case it’s really important to make sure that you clean up any
+temporary resources (eg files) that you used in the test. There is a special <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section
+to help you do this — see <a class="reference internal" href="sections/index.html#clean"><span class="std std-ref">here</span></a>.</p>
+<p>Tests run in parallel by default. Mutable resources such as files, directories, ports, database
+objects, and IPC identifiers must therefore be unique to each test. Read-only fixtures may be
+shared. If a resource cannot be isolated, declare the narrowest applicable conflict using
+<code class="docutils literal notranslate"><span class="pre">--CONFLICTS--</span></code> or a <code class="docutils literal notranslate"><span class="pre">CONFLICTS</span></code> file.</p>
+<p>Another good check is to look at what lines of code in the PHP source your test case covers. This is
+easy to do, there are some instructions on the <a class="reference external" href="https://wiki.php.net/doc/articles/writing-tests">PHP Wiki</a>.</p>
+</section>
+<section id="portability">
+<h2>Portability<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#portability" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#portability'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Writing portable tests can be hard if you don’t have access to all the many platforms that PHP can
+run on. Do your best. If in doubt, don’t disable a test. It is better that the test runs in as many
+environments as possible.</p>
+<p>If you know a new test won’t run in a specific environment, try to write the complementary test for
+that environment.</p>
+<p>Make sure sets of data are consistently ordered. SQL queries are not guaranteed to return results in
+the same order unless an ORDER BY clause is used. Directory listings are another example that can
+vary: use an appropriate PHP function to sort them before printing. Both of these examples have
+affected PHP tests in the past.</p>
+<p>Make sure that any test touching parsing or display of dates uses a hard-defined timezone —
+preferable ‘UTC’. It is important that this is defined in the file section using:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="nb">date_default_timezone_set</span><span class="p">(</span><span class="s1">'UTC'</span><span class="p">);</span>
+</span></code></pre></div>
+</div>
+<p>and not in the INI section. This is because of the order in which settings are checked which is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">date_default_timezone_set</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">TZ</span> <span class="n">environmental</span> <span class="o">-&gt;</span> <span class="n">INI</span> <span class="n">setting</span> <span class="o">-&gt;</span> <span class="n">System</span> <span class="n">Setting</span>
+</span></code></pre></div>
+</div>
+<p>If a TZ environmental variable is found the INI setting will be ignored.</p>
+<p>Tests that run, or only have matching EXPECT output, on 32bit platforms can use a SKIPIF section
+like:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">if</span> <span class="p">(</span><span class="nx">PHP_INT_SIZE</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">)</span> <span class="k">die</span><span class="p">(</span><span class="s2">"skip this test is for 32bit platforms only"</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Tests for 64bit platforms can use:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">if</span> <span class="p">(</span><span class="nx">PHP_INT_SIZE</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">)</span> <span class="k">die</span><span class="p">(</span><span class="s2">"skip this test is for 64bit platforms only"</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>To run a test only on Windows:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">if</span> <span class="p">(</span><span class="nb">substr</span><span class="p">(</span><span class="k">PHP_OS</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">'WIN'</span><span class="p">)</span> <span class="k">die</span><span class="p">(</span><span class="s2">"skip this test is for Windows platforms only"</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>To run a test only on Linux:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">stristr</span><span class="p">(</span><span class="k">PHP_OS</span><span class="p">,</span> <span class="s2">"Linux"</span><span class="p">))</span> <span class="k">die</span><span class="p">(</span><span class="s2">"skip this test is Linux platforms only"</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>To skip a test on Mac OS X Darwin:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">stristr</span><span class="p">(</span><span class="k">PHP_OS</span><span class="p">,</span> <span class="s2">"Darwin"</span><span class="p">))</span> <span class="k">die</span><span class="p">(</span><span class="s2">"skip this test is for Mac OS X platforms only"</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="final-notes">
+<h2>Final Notes<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#final-notes" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#final-notes'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<section id="cleaning-up-after-running-a-test">
+<h3>Cleaning up after running a test<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#cleaning-up-after-running-a-test" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cleaning-up-after-running-a-test'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Sometimes test cases create files or directories as part of the test case and it’s important to
+remove these after the test ends, the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section is provided to help with this.</p>
+<p>The PHP code in the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section is executed separately from the code in the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code>
+section. For example, this code:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nx">Will</span> <span class="nx">fail</span> <span class="nx">to</span> <span class="nx">clean</span> <span class="nx">up</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-4"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-5">          <span class="nv">$temp_filename</span> <span class="o">=</span> <span class="s2">"fred.tmp"</span><span class="p">;</span>
+</span><span id="line-6">          <span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$temp_filename</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">);</span>
+</span><span id="line-7">          <span class="nb">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="s2">"Hello Boys!"</span><span class="p">);</span>
+</span><span id="line-8">          <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span><span id="line-9"><span class="cp">?&gt;</span>
+</span><span id="line-10"><span class="x">--CLEAN--</span>
+</span><span id="line-11"><span class="cp">&lt;?php</span>
+</span><span id="line-12">          <span class="nb">unlink</span><span class="p">(</span><span class="nv">$temp_filename</span><span class="p">);</span>
+</span><span id="line-13"><span class="cp">?&gt;</span>
+</span><span id="line-14"><span class="x">--EXPECT--</span>
+</span></code></pre></div>
+</div>
+<p>will not remove the temporary file because the variable $temp_filename is not defined in the
+<code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section.</p>
+<p>Here is a better way to write the code:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="k">This</span> <span class="nx">will</span> <span class="nx">remove</span> <span class="nx">temporary</span> <span class="nx">files</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-4"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-5">        <span class="nv">$temp_filename</span> <span class="o">=</span> <span class="no">__DIR__</span><span class="o">.</span><span class="s2">"/fred.tmp"</span><span class="p">;</span>
+</span><span id="line-6">        <span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$temp_filename</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">);</span>
+</span><span id="line-7">        <span class="nb">fwrite</span> <span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="s2">"Hello Boys!</span><span class="se">\n</span><span class="s2">"</span><span class="p">);</span>
+</span><span id="line-8">        <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span><span id="line-9"><span class="cp">?&gt;</span>
+</span><span id="line-10"><span class="x">--CLEAN--</span>
+</span><span id="line-11"><span class="cp">&lt;?php</span>
+</span><span id="line-12">        <span class="nv">$temp_filename</span> <span class="o">=</span> <span class="no">__DIR__</span><span class="o">.</span><span class="s2">"/fred.tmp"</span><span class="p">;</span>
+</span><span id="line-13">        <span class="nb">unlink</span><span class="p">(</span><span class="nv">$temp_filename</span><span class="p">);</span>
+</span><span id="line-14"><span class="cp">?&gt;</span>
+</span><span id="line-15"><span class="x">--EXPECT--</span>
+</span></code></pre></div>
+</div>
+<p>Note the use of the <code class="docutils literal notranslate"><span class="pre">__DIR__</span></code> construct which will ensure that the temporary file is created in
+the same directory as the phpt test script.</p>
+<p>When creating temporary files it is a good idea to use an extension that indicates the use of the
+file, eg .tmp. It’s also a good idea to avoid using extensions that are already used for other
+purposes, eg .inc, .php. Similarly, it is helpful to give the temporary file a name that is clearly
+related to the test case. For example, mytest.phpt should create mytest.tmp (or mytestN.tmp, N=1,
+2,3,…) then if by any chance the temporary file isnt’t removed properly it will be obvious which
+test case created it.</p>
+<p>When writing and debugging a test case with a <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section it is helpful to remember that
+the php code in the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section is executed separately from the code in the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code>
+section. For example, in a test case called mytest.phpt, code from the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code> section is run
+from a file called mytest.php and code from the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section is run from a file called
+mytest.clean.php. If the test passes, both the .php and .clean.php files are removed by
+<code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code>. You can prevent the removal by using the –keep option of <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code>, this
+is a very useful option if you need to check that the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section code is working as you
+intended.</p>
+<p>Finally — if you are using CVS it’s helpful to add the extension that you use for test-related
+temporary files to the .cvsignore file — this will help to prevent you from accidentally checking
+temporary files into CVS.</p>
+</section>
+<section id="redirecting-tests">
+<h3>Redirecting tests<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#redirecting-tests" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#redirecting-tests'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">--REDIRECTTEST--</span></code> it is possible to redirect from one test to a bunch of other tests. That
+way multiple extensions can refer to the same set of test scripts probably using it with a different
+configuration.</p>
+<p>The block is eval’d and supposed to return an array describing how to redirect. The resulting array
+must contain the key ‘TEST’ that stores the redirect target as a string. This string usually is the
+directory where the test scripts are located and should be relative. Optionally you can use the
+‘ENV’ as an array configuring the environment to be set when executing the tests. This way you can
+pass configuration to the executed tests.</p>
+<p>Redirect tests may especially contain <code class="docutils literal notranslate"><span class="pre">--SKIPIF--</span></code>, <code class="docutils literal notranslate"><span class="pre">--ENV--</span></code>, and <code class="docutils literal notranslate"><span class="pre">--ARGS--</span></code> sections but
+they no not use any <code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code> section.</p>
+<p>The redirected tests themselves are just normal tests.</p>
+</section>
+<section id="error-reporting-in-tests">
+<h3>Error reporting in tests<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#error-reporting-in-tests" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#error-reporting-in-tests'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>All tests should run correctly with error_reporting(E_ALL) and display_errors=1. This is the default
+when called from <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code>. If you have a good reason for lowering the error reporting, use
+<code class="docutils literal notranslate"><span class="pre">--INI--</span></code> section and comment this in your testcode.</p>
+<p>If your test intentionally generates a PHP warning message use $php_errormsg variable, which you can
+then output. This will result in a consistent error message output across all platforms and PHP
+configurations, preventing your test from failing due inconsistencies in the error message content.
+Alternatively you can use <code class="docutils literal notranslate"><span class="pre">--EXPECTF--</span></code> and check for the message by replacing the path of the
+source of the message with <code class="docutils literal notranslate"><span class="pre">%s</span></code> and the line number with <code class="docutils literal notranslate"><span class="pre">%d</span></code>. The end of a message in a test
+file <code class="docutils literal notranslate"><span class="pre">example.phpt</span></code> then looks like <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">%sexample.php</span> <span class="pre">on</span> <span class="pre">line</span> <span class="pre">%d</span></code>. We explicitly dropped the
+last path divider as that is a system dependent character <code class="docutils literal notranslate"><span class="pre">/</span></code> or <code class="docutils literal notranslate"><span class="pre">\</span></code>.</p>
+</section>
+<section id="last-bit">
+<h3>Last bit<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#last-bit" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#last-bit'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Often you want to run test scripts without <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> by executing them on command line like
+any other php script. But sometimes it disturbs having a long <code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code> block, so that you
+don’t see the actual output as it scrolls away overwritten by the blocks following the actual file
+block. The workaround is to use terminate the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code> section with the two lines <code class="docutils literal notranslate"><span class="pre">===DONE===</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&lt;?php</span> <span class="pre">exit(0);</span> <span class="pre">?&gt;</span></code>. When doing so <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> does not execute the line containing the
+exit call as that would suppress leak messages. Actually <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> ignores any part after a
+line consisting only of <code class="docutils literal notranslate"><span class="pre">===DONE===</span></code>.</p>
+<p>Here is an example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nx">Test</span> <span class="nb">hypot</span><span class="p">()</span> <span class="nx">—</span> <span class="nx">dealing</span> <span class="nx">with</span> <span class="nx">mixed</span> <span class="nx">number</span><span class="o">/</span><span class="nx">character</span> <span class="nx">input</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">INI</span><span class="o">--</span>
+</span><span id="line-4"><span class="nx">precision</span><span class="o">=</span><span class="mi">14</span>
+</span><span id="line-5"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-6"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-7"><span class="nv">$a</span><span class="o">=</span><span class="s2">"23abc"</span><span class="p">;</span>
+</span><span id="line-8"><span class="nv">$b</span><span class="o">=-</span><span class="mi">33</span><span class="p">;</span>
+</span><span id="line-9"><span class="k">echo</span> <span class="s2">"</span><span class="si">$a</span><span class="s2"> :</span><span class="si">$b</span><span class="s2"> "</span><span class="p">;</span>
+</span><span id="line-10"><span class="nv">$res</span> <span class="o">=</span> <span class="nb">hypot</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="nv">$b</span><span class="p">);</span>
+</span><span id="line-11"><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$res</span><span class="p">);</span>
+</span><span id="line-12"><span class="cp">?&gt;</span>
+</span><span id="line-13"><span class="x">===DONE===</span>
+</span><span id="line-14"><span class="cp">&lt;?php</span> <span class="k">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="cp">?&gt;</span>
+</span><span id="line-15"><span class="x">--EXPECTF--</span>
+</span><span id="line-16"><span class="x">23abc :-33 float(40.224370722238)</span>
+</span><span id="line-17"><span class="x">===DONE===</span>
+</span></code></pre></div>
+</div>
+<p>If executed as PHP script the output will stop after the code on the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code> section has been
+run.</p>
+</section>
+</section>
+</section>
+</div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
+<div class="mr-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="../running-tests/index.html">
+<svg class="mr-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="15 18 9 12 15 6"></polyline>
+</svg>
+        Running Tests
+      </a>
+</div>
+<div class="ml-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="sections/index.html">
+        Sections
+        <svg class="ml-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</a>
+</div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#naming-conventions'" class="reference internal" href="#naming-conventions">Naming Conventions</a></li>
+<li><a :data-current="activeSection === '#how-big-is-a-test-case'" class="reference internal" href="#how-big-is-a-test-case">How big is a test case?</a></li>
+<li><a :data-current="activeSection === '#comments'" class="reference internal" href="#comments">Comments</a></li>
+<li><a :data-current="activeSection === '#minimal-test-layout'" class="reference internal" href="#minimal-test-layout">Minimal Test Layout</a></li>
+<li><a :data-current="activeSection === '#analyzing-failures'" class="reference internal" href="#analyzing-failures">Analyzing Failures</a></li>
+<li><a :data-current="activeSection === '#testing-your-test-cases'" class="reference internal" href="#testing-your-test-cases">Testing your test cases</a></li>
+<li><a :data-current="activeSection === '#portability'" class="reference internal" href="#portability">Portability</a></li>
+<li><a :data-current="activeSection === '#final-notes'" class="reference internal" href="#final-notes">Final Notes</a><ul>
+<li><a :data-current="activeSection === '#cleaning-up-after-running-a-test'" class="reference internal" href="#cleaning-up-after-running-a-test">Cleaning up after running a test</a></li>
+<li><a :data-current="activeSection === '#redirecting-tests'" class="reference internal" href="#redirecting-tests">Redirecting tests</a></li>
+<li><a :data-current="activeSection === '#error-reporting-in-tests'" class="reference internal" href="#error-reporting-in-tests">Error reporting in tests</a></li>
+<li><a :data-current="activeSection === '#last-bit'" class="reference internal" href="#last-bit">Last bit</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.1.0</a></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+<script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+<script defer="defer" src="../../_static/theme.js?v=5db23cf8"></script>
+<script src="../../_static/design-tabs.js?v=f930bc37"></script>
+</body>
+</html>

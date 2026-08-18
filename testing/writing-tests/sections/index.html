@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+
+<html :class="{ 'dark' : darkMode === true }" data-content_root="../../../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
+<head>
+<script>
+    (function () {
+      // Set initial color scheme
+      if ((localStorage.getItem("_x_darkMode") === "true") || (window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+      }
+
+      // Watch for media preference changes
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+        localStorage.setItem("_x_darkMode", event.matches);
+        document.documentElement.classList.toggle("dark", event.matches);
+      });
+    })();
+  </script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sections | php-src docs</title>
+<meta content="Sections | php-src docs" property="og:title"/>
+<meta content="Sections | php-src docs" name="twitter:title"/>
+<link href="../../../_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/css/code-no-font-ligatures.css?v=7445b7a4" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/awesome-sphinx-design.css?v=a81faafa" rel="stylesheet" type="text/css"/>
+<link href="../../../search.html" rel="search" title="Search"/>
+<link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="../samples/index.html" rel="next" title="Samples"/>
+<link href="../index.html" rel="prev" title="Writing Tests"/>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-xs border-border bg-background/90 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="../../../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">php-src docs</span>
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 gap-2 sm:gap-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center gap-1">
+<a href="https://github.com/php/php-src" rel="noopener nofollow" title="Visit repository on GitHub">
+<div class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9">
+<svg fill="currentColor" height="26px" style="margin-top:-2px;display:inline" viewbox="0 0 45 44" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.477.927C10.485.927.76 10.65.76 22.647c0 9.596 6.223 17.736 14.853 20.608 1.087.2 1.483-.47 1.483-1.047 0-.516-.019-1.881-.03-3.693-6.04 1.312-7.315-2.912-7.315-2.912-.988-2.51-2.412-3.178-2.412-3.178-1.972-1.346.149-1.32.149-1.32 2.18.154 3.327 2.24 3.327 2.24 1.937 3.318 5.084 2.36 6.321 1.803.197-1.403.759-2.36 1.379-2.903-4.823-.548-9.894-2.412-9.894-10.734 0-2.37.847-4.31 2.236-5.828-.224-.55-.969-2.759.214-5.748 0 0 1.822-.584 5.972 2.226 1.732-.482 3.59-.722 5.437-.732 1.845.01 3.703.25 5.437.732 4.147-2.81 5.967-2.226 5.967-2.226 1.185 2.99.44 5.198.217 5.748 1.392 1.517 2.232 3.457 2.232 5.828 0 8.344-5.078 10.18-9.916 10.717.779.67 1.474 1.996 1.474 4.021 0 2.904-.027 5.247-.027 5.96 0 .58.392 1.256 1.493 1.044C37.981 40.375 44.2 32.24 44.2 22.647c0-11.996-9.726-21.72-21.722-21.72" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+</a>
+<button @click="darkMode = !darkMode" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" title="Toggle color scheme" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="justify-start text-sm md:!hidden bg-background" href="../../../index.html"><span class="font-bold text-clip whitespace-nowrap">php-src docs</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction/high-level-overview.html">High-level overview</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../../introduction/ides/index.html">IDEs<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../../introduction/ides/visual-studio-code.html">Visual Studio Code</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../../core/data-structures/index.html">Data Structures<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../../core/data-structures/zval.html">zval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core/data-structures/zend_string.html">zend_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../core/data-structures/zend_constant.html">zend_constant</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../../core/memory-management/index.html">Memory Management<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../../core/memory-management/reference-counting.html">Reference Counting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core/output-buffering.html">Output Buffering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core/streams/index.html">Streams</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../extensions/parameter-parsing.html">Parameter Parsing</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../../extensions/bundled-extensions.html">Bundled Extensions<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../../extensions/bundled-extensions/filter.html">ext/filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extensions/unbundled-extensions.html">Unbundled Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../running-tests/index.html">Running Tests</a></li>
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../index.html">Writing Tests<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../index.html">Basics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../samples/index.html">Samples</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../miscellaneous/stubs.html">Stubs</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../../index.html">
+<span class="hidden md:inline">php-src docs</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Writing Tests</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Sections</span>
+</nav>
+<div id="content" role="main">
+<section id="sections">
+<h1>Sections<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#sections"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>A phpt test can have many more parts than just the minimum. In fact some of the mandatory parts have
+alternatives that may be used if the situation warrants it. The phpt sections are documented here.</p>
+<section id="test">
+<h2><code class="docutils literal notranslate"><span class="pre">--TEST--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#test" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#test'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Title of test as a single line short description.</p>
+<p><strong>Required:</strong> Yes</p>
+<p><strong>Format:</strong> Plain text. We recommend a single line only.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--TEST--
+</span><span id="line-2">Test filter_input() with GET and POST data.
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+</section>
+<section id="description">
+<h2><code class="docutils literal notranslate"><span class="pre">--DESCRIPTION--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#description" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#description'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> If your test requires more than a single line title to adequately describe it, you
+can use this section for further explanation. Multiple lines are allowed and besides being used for
+information, this section is completely ignored by the test binary.</p>
+<p><strong>Required:</strong> No</p>
+<p><strong>Format:</strong> Plain text, multiple lines.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--DESCRIPTION--
+</span><span id="line-2">This test covers both valid and invalid usages of filter_input() with INPUT_GET and INPUT_POST data and several different filter sanitizers.
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+</section>
+<section id="credits">
+<h2><code class="docutils literal notranslate"><span class="pre">--CREDITS--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#credits" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#credits'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Used to credit contributors without CVS commit rights, who put their name and email
+on the first line. If the test was part of a TestFest event, then # followed by the name of the
+event and the date (YYYY-MM-DD) on the second line.</p>
+<p><strong>Required:</strong> No. For newly created tests the section should no longer be used for simple authorship
+claims or listing all contributors who edited the test; as it is already accurately tracked by Git.
+It may be used if more specific attribution is useful, for example to credit the original reporter
+of a bug or a contributor who is not credited via <code class="docutils literal notranslate"><span class="pre">Co-authored-by</span></code> tag.</p>
+<p><strong>Format:</strong> Name Email [Event]</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CREDITS--
+</span><span id="line-2">Felipe Pena
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CREDITS--
+</span><span id="line-2">Zoe Slattery zoe@php.net
+</span><span id="line-3"># TestFest Munich 2009-05-19
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample002-phpt"><span class="std std-ref">sample002.phpt</span></a></p>
+</section>
+<section id="skipif">
+<h2><code class="docutils literal notranslate"><span class="pre">--SKIPIF--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#skipif" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#skipif'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> A condition or set of conditions used to determine if a test should be skipped.
+Tests that are only applicable to a certain platform, extension or PHP version are good reasons for
+using a <code class="docutils literal notranslate"><span class="pre">--SKIPIF--</span></code> section.</p>
+<p>A common practice for extension tests is to write your <code class="docutils literal notranslate"><span class="pre">--SKIPIF--</span></code> extension criteria into a file
+call skipif.inc and then including that file in the <code class="docutils literal notranslate"><span class="pre">--SKIPIF--</span></code> section of all your extension
+tests. This promotes the DRY principle and reduces future code maintenance.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> PHP code enclosed by PHP tags. If the output of this scripts starts with “skip”, the
+test is skipped. If the output starts with “xfail”, the test is marked as expected failure. If the
+output starts with “flaky”, the test is marked as flaky test. The “xfail” convention is supported as
+of PHP 7.2.0. The “flaky” convention is supported as of PHP 8.2.25 and PHP 8.3.13, respectively.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">extension_loaded</span><span class="p">(</span><span class="s2">"filter"</span><span class="p">))</span> <span class="k">die</span><span class="p">(</span><span class="s2">"Skipped: filter extension required."</span><span class="p">);</span> <span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">include</span><span class="p">(</span><span class="s1">'skipif.inc'</span><span class="p">);</span> <span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample003-phpt"><span class="std std-ref">sample003.phpt</span></a></p>
+<p>Example 3 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s1">'SKIP_ASAN'</span><span class="p">))</span> <span class="k">die</span><span class="p">(</span><span class="s1">'xfail Startup failure leak'</span><span class="p">);</span> <span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 3 (full): <a class="reference internal" href="../samples/index.html#xfailif-phpt"><span class="std std-ref">xfailif.phpt</span></a></p>
+<p>Example 4 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">if</span> <span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s2">"GITHUB_ACTIONS"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">PHP_OS_FAMILY</span> <span class="o">===</span> <span class="s2">"Darwin"</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="line-4">        <span class="k">die</span><span class="p">(</span><span class="s2">"flaky Occasionally segfaults on macOS for unknown reasons"</span><span class="p">);</span>
+</span><span id="line-5"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<p>Some tests depend on modules or functions available only in certain versions or they even require
+minimum version of php or zend. These tests should be skipped when the requirement cannot be
+fulfilled. To achieve this you can use the <code class="docutils literal notranslate"><span class="pre">SKIPIF</span></code> section. To tell <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> that your
+test should be skipped the <code class="docutils literal notranslate"><span class="pre">SKIPIF</span></code> section must print out the word “skip” followed by a reason
+why the test should skip.</p>
+<p><em>ext/sodium/tests/pwhash_argon2i.phpt</em></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nx">Check</span> <span class="k">for</span> <span class="nx">libsodium</span> <span class="nx">argon2i</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">EXTENSIONS</span><span class="o">--</span>
+</span><span id="line-4"><span class="nx">sodium</span>
+</span><span id="line-5"><span class="o">--</span><span class="nx">SKIPIF</span><span class="o">--</span>
+</span><span id="line-6"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-7"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">defined</span><span class="p">(</span><span class="s1">'SODIUM_CRYPTO_PWHASH_SALTBYTES'</span><span class="p">))</span> <span class="k">print</span> <span class="s2">"skip libsodium without argon2i"</span><span class="p">;</span>
+</span><span id="line-8"><span class="cp">?&gt;</span>
+</span><span id="line-9"><span class="x">--FILE--</span>
+</span><span id="line-10"><span class="x">[snip]</span>
+</span></code></pre></div>
+</div>
+<p>Test script and <code class="docutils literal notranslate"><span class="pre">SKIPIF</span></code> code should be directly written into <code class="docutils literal notranslate"><span class="pre">\*.phpt</span></code>. However, it is
+recommended to use include files when more test scripts depend on the same <code class="docutils literal notranslate"><span class="pre">SKIPIF</span></code> code or when
+certain test files need the same values for some input.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No file used by any test should have one of the following extensions: “.php”, “.log”, “.mem”,
+“.exp”, “.out” or “.diff”. When you use an include file for the <code class="docutils literal notranslate"><span class="pre">SKIPIF</span></code> section it should be
+named “skipif.inc” and an include file used in the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> section of many tests should be named
+“test.inc”.</p>
+</div>
+</section>
+<section id="conflicts">
+<h2><code class="docutils literal notranslate"><span class="pre">--CONFLICTS--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#conflicts" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#conflicts'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This section is only relevant for parallel test execution (available as of PHP
+7.4.0), and allows to specify conflict keys. While a test that conflicts with key K is running, no
+other test that conflicts with K is run. For tests conflicting with “all”, no other tests are run in
+parallel.</p>
+<p>An alternative to have a <code class="docutils literal notranslate"><span class="pre">--CONFLICTS--</span></code> section is to add a file named <code class="docutils literal notranslate"><span class="pre">CONFLICTS</span></code> to the
+directory containing the tests. The contents of the <code class="docutils literal notranslate"><span class="pre">CONFLICTS</span></code> file must have the same format as
+the contents of the <code class="docutils literal notranslate"><span class="pre">--CONFLICTS--</span></code> section.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> One conflict key per line. Comment lines starting with # are also allowed.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CONFLICTS--
+</span><span id="line-2">server
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#conflicts-1-phpt"><span class="std std-ref">conflicts_1.phpt</span></a></p>
+</section>
+<section id="whitespace-sensitive">
+<h2><code class="docutils literal notranslate"><span class="pre">--WHITESPACE_SENSITIVE--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#whitespace-sensitive" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#whitespace-sensitive'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This flag is used to indicate that the test should not be changed by automated
+formatting changes. Available as of PHP 7.4.3.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> No value, just the <code class="docutils literal notranslate"><span class="pre">--WHITESPACE_SENSITIVE--</span></code> statement.</p>
+</section>
+<section id="capture-stdio">
+<h2><code class="docutils literal notranslate"><span class="pre">--CAPTURE_STDIO--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#capture-stdio" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#capture-stdio'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This section enables which I/O streams the <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> test script will use
+when comparing executed file to the expected output. The <code class="docutils literal notranslate"><span class="pre">STDIN</span></code> is the standard input stream.
+When <code class="docutils literal notranslate"><span class="pre">STDOUT</span></code> is enabled, the test script will also check the contents of the standard output.
+<code class="docutils literal notranslate"><span class="pre">When</span> <span class="pre">STDERR</span></code> is enabled, the test script will also compare the contents of the standard error I/O
+stream.</p>
+<p>If this section is left out of the test, by default, all three streams are enabled, so the tests
+without this section capture all and is the same as enabling all three manually.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> A case insensitive space, newline or otherwise delimited list of one or more strings of
+STDIN, STDOUT, and/or STDERR.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CAPTURE_STDIO--
+</span><span id="line-2">STDIN STDERR
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#capture-stdio-1-phpt"><span class="std std-ref">capture_stdio_1.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CAPTURE_STDIO--
+</span><span id="line-2">STDIN STDOUT
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#capture-stdio-2-phpt"><span class="std std-ref">capture_stdio_2.phpt</span></a></p>
+<p>Example 3 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CAPTURE_STDIO--
+</span><span id="line-2">STDIN STDOUT STDERR
+</span></code></pre></div>
+</div>
+<p>Example 3(full): <a class="reference internal" href="../samples/index.html#capture-stdio-3-phpt"><span class="std std-ref">capture_stdio_3.phpt</span></a></p>
+</section>
+<section id="extensions">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXTENSIONS--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#extensions" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#extensions'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Additional required shared extensions to be loaded when running the test. When the
+<code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code> script is executed it loads all the extensions that are available and enabled for
+that particular PHP at the time. If the test requires additional extension to be loaded and they
+aren’t loaded prior to running the test, this section loads them.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> A case sensitive newline separated list of extension names.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXTENSIONS--
+</span><span id="line-2">curl
+</span><span id="line-3">imagick
+</span><span id="line-4">tokenizer
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#extensions-phpt"><span class="std std-ref">extensions.phpt</span></a></p>
+<p>Some tests depend on PHP extensions that may be unavailable. These extensions should be listed in
+the <code class="docutils literal notranslate"><span class="pre">EXTENSIONS</span></code> section. If an extension is missing, PHP will try to find it in a shared module
+and skip the test if it’s not there.</p>
+<p><em>/ext/sodium/tests/crypto_scalarmult.phpt</em></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nx">Check</span> <span class="k">for</span> <span class="nx">libsodium</span> <span class="nx">scalarmult</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">EXTENSIONS</span><span class="o">--</span>
+</span><span id="line-4"><span class="nx">sodium</span>
+</span><span id="line-5"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-6"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-7"><span class="nv">$n</span> <span class="o">=</span> <span class="nb">sodium_hex2bin</span><span class="p">(</span><span class="s2">"5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb"</span><span class="p">);</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="post">
+<h2><code class="docutils literal notranslate"><span class="pre">--POST--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#post" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#post'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> POST variables or data to be passed to the test script. This section forces the use
+of the CGI binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p>Requirements: PHP CGI binary.</p>
+<p><strong>Format:</strong> Follows the HTTP post data format.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--POST--
+</span><span id="line-2">c=&lt;p&gt;string&lt;/p&gt;&amp;d=12345.7
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--POST--
+</span><span id="line-2"><span class="nt">&lt;SOAP-ENV:Envelope</span>
+</span><span id="line-3"><span class="w">  </span><span class="na">SOAP-ENV:encodingStyle=</span><span class="s">"http://schemas.xmlsoap.org/soap/encoding/"</span>
+</span><span id="line-4"><span class="w">  </span><span class="na">xmlns:SOAP-ENV=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+</span><span id="line-5"><span class="w">  </span><span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+</span><span id="line-6"><span class="w">  </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+</span><span id="line-7"><span class="w">  </span><span class="na">xmlns:si=</span><span class="s">"http://soapinterop.org/xsd"</span><span class="nt">&gt;</span>
+</span><span id="line-8"><span class="w">  </span><span class="nt">&lt;SOAP-ENV:Body&gt;</span>
+</span><span id="line-9"><span class="w">        </span><span class="nt">&lt;ns1:test</span><span class="w"> </span><span class="na">xmlns:ns1=</span><span class="s">"http://testuri.org"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="line-10"><span class="w">  </span><span class="nt">&lt;/SOAP-ENV:Body&gt;</span>
+</span><span id="line-11"><span class="nt">&lt;/SOAP-ENV:Envelope&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample005-phpt"><span class="std std-ref">sample005.phpt</span></a></p>
+</section>
+<section id="post-raw">
+<h2><code class="docutils literal notranslate"><span class="pre">--POST_RAW--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#post-raw" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#post-raw'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Raw POST data to be passed to the test script. This differs from the section above
+because it doesn’t automatically set the Content-Type, this leaves you free to define your own
+within the section. This section forces the use of the CGI binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p>Requirements: PHP CGI binary.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> Follows the HTTP post data format.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--POST_RAW--
+</span><span id="line-2">Content-type: multipart/form-data, boundary=AaB03x
+</span><span id="line-3">
+</span><span id="line-4">--AaB03x content-disposition: form-data; name="field1"
+</span><span id="line-5">
+</span><span id="line-6">Joe Blow
+</span><span id="line-7">--AaB03x
+</span><span id="line-8">content-disposition: form-data; name="pics"; filename="file1.txt"
+</span><span id="line-9">Content-Type: text/plain
+</span><span id="line-10">
+</span><span id="line-11">abcdef123456789
+</span><span id="line-12">--AaB03x--
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample006-phpt"><span class="std std-ref">sample006.phpt</span></a></p>
+</section>
+<section id="put">
+<h2><code class="docutils literal notranslate"><span class="pre">--PUT--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#put" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#put'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Similar to the section above, PUT data to be passed to the test script. This
+section forces the use of the CGI binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p>Requirements: PHP CGI binary.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> Raw data optionally preceded by a Content-Type header.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--PUT--
+</span><span id="line-2">Content-Type: text/json
+</span><span id="line-3">
+</span><span id="line-4">{"name":"default output handler","type":0,"flags":112,"level":0,"chunk_size":0,"buffer_size":16384,"buffer_used":3}
+</span></code></pre></div>
+</div>
+</section>
+<section id="gzip-post">
+<h2><code class="docutils literal notranslate"><span class="pre">--GZIP_POST--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#gzip-post" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#gzip-post'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> When this section exists, the POST data will be gzencode()’d. This section forces
+the use of the CGI binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> Just add the content to be gzencode()’d in the section.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--GZIP_POST--
+</span><span id="line-2"><span class="nt">&lt;SOAP-ENV:Envelope</span>
+</span><span id="line-3"><span class="w">  </span><span class="na">SOAP-ENV:encodingStyle=</span><span class="s">"http://schemas.xmlsoap.org/soap/encoding/"</span>
+</span><span id="line-4"><span class="w">  </span><span class="na">xmlns:SOAP-ENV=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+</span><span id="line-5"><span class="w">  </span><span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+</span><span id="line-6"><span class="w">  </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+</span><span id="line-7"><span class="w">  </span><span class="na">xmlns:si=</span><span class="s">"http://soapinterop.org/xsd"</span><span class="nt">&gt;</span>
+</span><span id="line-8"><span class="w">  </span><span class="nt">&lt;SOAP-ENV:Body&gt;</span>
+</span><span id="line-9"><span class="w">        </span><span class="nt">&lt;ns1:test</span><span class="w"> </span><span class="na">xmlns:ns1=</span><span class="s">"http://testuri.org"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="line-10"><span class="w">  </span><span class="nt">&lt;/SOAP-ENV:Body&gt;</span>
+</span><span id="line-11"><span class="nt">&lt;/SOAP-ENV:Envelope&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample005-phpt"><span class="std std-ref">sample005.phpt</span></a></p>
+</section>
+<section id="deflate-post">
+<h2><code class="docutils literal notranslate"><span class="pre">--DEFLATE_POST--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#deflate-post" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#deflate-post'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> When this section exists, the POST data will be gzcompress()’ed. This section
+forces the use of the CGI binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p>Requirements:</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> Just add the content to be gzcompress()’ed in the section.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--DEFLATE_POST--
+</span><span id="line-2"><span class="cp">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;</span>
+</span><span id="line-3"><span class="nt">&lt;SOAP-ENV:Envelope</span>
+</span><span id="line-4"><span class="w">  </span><span class="na">SOAP-ENV:encodingStyle=</span><span class="s">"http://schemas.xmlsoap.org/soap/encoding/"</span>
+</span><span id="line-5"><span class="w">  </span><span class="na">xmlns:SOAP-ENV=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+</span><span id="line-6"><span class="w">  </span><span class="na">xmlns:xsd=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+</span><span id="line-7"><span class="w">  </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+</span><span id="line-8"><span class="w">  </span><span class="na">xmlns:si=</span><span class="s">"http://soapinterop.org/xsd"</span><span class="nt">&gt;</span>
+</span><span id="line-9"><span class="w">  </span><span class="nt">&lt;SOAP-ENV:Body&gt;</span>
+</span><span id="line-10"><span class="w">        </span><span class="nt">&lt;ns1:test</span><span class="w"> </span><span class="na">xmlns:ns1=</span><span class="s">"http://testuri.org"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="line-11"><span class="w">  </span><span class="nt">&lt;/SOAP-ENV:Body&gt;</span>
+</span><span id="line-12"><span class="nt">&lt;/SOAP-ENV:Envelope&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample007-phpt"><span class="std std-ref">sample007.phpt</span></a></p>
+</section>
+<section id="get">
+<h2><code class="docutils literal notranslate"><span class="pre">--GET--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#get" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#get'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> GET variables to be passed to the test script. This section forces the use of the
+CGI binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p>Requirements: PHP CGI binary.</p>
+<p><strong>Format:</strong> A single line of text passed as the GET data to the script.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--GET--
+</span><span id="line-2">a=&lt;b&gt;test&lt;/b&gt;&amp;b=http://example.com
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--GET--
+</span><span id="line-2">ar[elm1]=1234&amp;ar[elm2]=0660&amp;a=0234
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample008-phpt"><span class="std std-ref">sample008.phpt</span></a></p>
+</section>
+<section id="cookie">
+<h2><code class="docutils literal notranslate"><span class="pre">--COOKIE--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#cookie" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cookie'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Cookies to be passed to the test script. This section forces the use of the CGI
+binary instead of the usual CLI one.</p>
+<p><strong>Required:</strong> No.</p>
+<p>Requirements: PHP CGI binary.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> A single line of text in a valid HTTP cookie format.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="n">COOKIE</span><span class="o">--</span>
+</span><span id="line-2"><span class="n">hello</span><span class="o">=</span><span class="n">World</span><span class="p">;</span><span class="n">goodbye</span><span class="o">=</span><span class="n">MrChips</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample002-phpt"><span class="std std-ref">sample002.phpt</span></a></p>
+</section>
+<section id="stdin">
+<h2><code class="docutils literal notranslate"><span class="pre">--STDIN--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#stdin" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#stdin'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Data to be fed to the test script’s standard input.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> Any text within this section is passed as STDIN to PHP.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--STDIN--
+</span><span id="line-2">fooBar
+</span><span id="line-3">use this to input some thing to the php script
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample009-phpt"><span class="std std-ref">sample009.phpt</span></a></p>
+</section>
+<section id="ini">
+<h2><code class="docutils literal notranslate"><span class="pre">--INI--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#ini" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#ini'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> To be used if you need a specific php.ini setting for the test.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> Key value pairs including automatically replaced tags. One setting per line. Content
+that is not a valid ini setting may cause failures.</p>
+<p>The following is a list of all tags and what they are used to represent:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{PWD}</span></code>: Represents the directory of the file containing the <code class="docutils literal notranslate"><span class="pre">--INI--</span></code> section.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{TMP}</span></code>: Represents the system’s temporary directory. Available as of PHP 7.2.19 and 7.3.6.</p></li>
+</ul>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--INI--
+</span><span id="line-2">precision=14
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--INI--
+</span><span id="line-2">session.use_cookies=0
+</span><span id="line-3">session.cache_limiter=
+</span><span id="line-4">register_globals=1
+</span><span id="line-5">session.serialize_handler=php
+</span><span id="line-6">session.save_handler=files
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample003-phpt"><span class="std std-ref">sample003.phpt</span></a></p>
+</section>
+<section id="args">
+<h2><code class="docutils literal notranslate"><span class="pre">--ARGS--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#args" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#args'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> A single line defining the arguments passed to PHP.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> A single line of text that is passed as the argument(s) to the PHP CLI.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--ARGS--
+</span><span id="line-2">--arg value --arg=value -avalue -a=value -a value
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample010-phpt"><span class="std std-ref">sample010.phpt</span></a></p>
+</section>
+<section id="env">
+<h2><code class="docutils literal notranslate"><span class="pre">--ENV--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#env" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#env'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Configures environment variables such as those found in the <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> global
+array.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> Key value pairs. One setting per line.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--ENV--
+</span><span id="line-2">SCRIPT_NAME=/frontcontroller10.php
+</span><span id="line-3">REQUEST_URI=/frontcontroller10.php/hi
+</span><span id="line-4">PATH_INFO=/hi
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample018-phpt"><span class="std std-ref">sample018.phpt</span></a></p>
+</section>
+<section id="phpdbg">
+<h2><code class="docutils literal notranslate"><span class="pre">--PHPDBG--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#phpdbg" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#phpdbg'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This section takes arbitrary phpdbg commands and executes the test file according
+to them as it would be run in the phpdbg prompt.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> Arbitrary phpdbg commands</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--PHPDBG--
+</span><span id="line-2">b
+</span><span id="line-3">4
+</span><span id="line-4">b
+</span><span id="line-5">del
+</span><span id="line-6">0
+</span><span id="line-7">b
+</span><span id="line-8">5
+</span><span id="line-9">r
+</span><span id="line-10">b
+</span><span id="line-11">del
+</span><span id="line-12">1
+</span><span id="line-13">r
+</span><span id="line-14">y
+</span><span id="line-15">q
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#phpdbg-1-phpt"><span class="std std-ref">phpdbg_1.phpt</span></a></p>
+</section>
+<section id="file">
+<h2><code class="docutils literal notranslate"><span class="pre">--FILE--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#file" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#file'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> The test source code.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type sections is required.</p>
+<p><strong>Format:</strong> PHP source code enclosed by PHP tags.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="nb">ini_set</span><span class="p">(</span><span class="s1">'html_errors'</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</span><span id="line-4"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_GET</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_STRIPPED</span><span class="p">));</span>
+</span><span id="line-5"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_GET</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">));</span>
+</span><span id="line-6"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_GET</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_SPECIAL_CHARS</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)));</span>
+</span><span id="line-7"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_GET</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="nx">FILTER_VALIDATE_FLOAT</span><span class="p">,</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">));</span>
+</span><span id="line-8"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_POST</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_STRIPPED</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">)));</span>
+</span><span id="line-9"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_POST</span><span class="p">,</span> <span class="s2">"d"</span><span class="p">,</span> <span class="nx">FILTER_VALIDATE_FLOAT</span><span class="p">));</span>
+</span><span id="line-10"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_POST</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_SPECIAL_CHARS</span><span class="p">));</span>
+</span><span id="line-11"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_POST</span><span class="p">,</span> <span class="s2">"d"</span><span class="p">,</span> <span class="nx">FILTER_VALIDATE_INT</span><span class="p">));</span>
+</span><span id="line-12"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_var</span><span class="p">(</span><span class="k">new</span> <span class="k">stdClass</span><span class="p">,</span> <span class="s2">"d"</span><span class="p">));</span>
+</span><span id="line-13"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_POST</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">));</span>
+</span><span id="line-14"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_var</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">));</span>
+</span><span id="line-15"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">filter_var</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+</span><span id="line-16"><span class="k">echo</span> <span class="s2">"Done</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+</span><span id="line-17"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+</section>
+<section id="fileeof">
+<h2><code class="docutils literal notranslate"><span class="pre">--FILEEOF--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#fileeof" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#fileeof'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> An alternative to <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code> where any trailing line breaks (n || r || rn
+found at the end of the section) are omitted. This is an extreme edge-case feature, so 99.99% of the
+time you won’t need this section.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type sections is required.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> PHP source code enclosed by PHP tags.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">FILEEOF</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">eval</span><span class="p">(</span><span class="s2">"echo 'Hello'; // comment"</span><span class="p">);</span>
+</span><span id="line-4"><span class="k">echo</span> <span class="s2">" World"</span><span class="p">;</span>
+</span><span id="line-5"><span class="c1">//last line comment</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample011-phpt"><span class="std std-ref">sample011.phpt</span></a></p>
+</section>
+<section id="file-external">
+<h2><code class="docutils literal notranslate"><span class="pre">--FILE_EXTERNAL--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#file-external" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#file-external'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> An alternative to <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code>. This is used to specify that an external file
+should be used as the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code> contents of the test file, and is designed for running the same
+test file with different ini, environment, post/get or other external inputs. Basically it allows
+you to DRY up some of your tests. The file must be in the same directory as the test file, or in a
+subdirectory.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type sections is required.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> path/to/file. Single line.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--FILE_EXTERNAL--
+</span><span id="line-2">files/file012.inc
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample012-phpt"><span class="std std-ref">sample012.phpt</span></a></p>
+</section>
+<section id="redirecttest">
+<h2><code class="docutils literal notranslate"><span class="pre">--REDIRECTTEST--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#redirecttest" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#redirecttest'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This block allows you to redirect from one test to a bunch of other tests. It also
+allows you to set configurations which are used on all tests in your destination.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type sections is required.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> PHP source which is run through <code class="docutils literal notranslate"><span class="pre">eval()</span></code>. The tests destination is the value of an
+array index ‘TESTS’. Also, keep in mind, you can not use a <code class="docutils literal notranslate"><span class="pre">REDIRECTTEST</span></code> which is being pointed
+to by another test which contains a <code class="docutils literal notranslate"><span class="pre">REDIRECTTEST</span></code>. In other words, no nesting.</p>
+<p>The relative path declared in ‘TESTS’ is relative to the base directory for the PHP source code, not
+relative to the current directory.</p>
+<p>Last note, the array in this section must be returned to work.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">REDIRECTTEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+</span><span id="line-3">  <span class="s1">'ENV'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+</span><span id="line-4">          <span class="s1">'PDOTEST_DSN'</span> <span class="o">=&gt;</span> <span class="s1">'sqlite2::memory:'</span>
+</span><span id="line-5">        <span class="p">),</span>
+</span><span id="line-6">  <span class="s1">'TESTS'</span> <span class="o">=&gt;</span> <span class="s1">'ext/pdo/tests'</span>
+</span><span id="line-7">  <span class="p">);</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample013-phpt"><span class="std std-ref">sample013.phpt</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The destination tests for this example are not included. See the PDO extension tests for
+reference to live tests using this section.</p>
+</div>
+<p>Example 2 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">REDIRECTTEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="c1"># magic auto-configuration</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span id="line-5">  <span class="s1">'TESTS'</span> <span class="o">=&gt;</span> <span class="s1">'ext/pdo/tests'</span>
+</span><span id="line-6"><span class="p">);</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'PDO_MYSQL_TEST_DSN'</span><span class="p">))</span> <span class="p">{</span>
+</span><span id="line-9">  <span class="c1"># user set them from their shell</span>
+</span><span id="line-10">  <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_DSN'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'PDO_MYSQL_TEST_DSN'</span><span class="p">);</span>
+</span><span id="line-11">  <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_USER'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'PDO_MYSQL_TEST_USER'</span><span class="p">);</span>
+</span><span id="line-12">  <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_PASS'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'PDO_MYSQL_TEST_PASS'</span><span class="p">);</span>
+</span><span id="line-13">  <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'PDO_MYSQL_TEST_ATTR'</span><span class="p">))</span> <span class="p">{</span>
+</span><span id="line-14">        <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_ATTR'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'PDO_MYSQL_TEST_ATTR'</span><span class="p">);</span>
+</span><span id="line-15">  <span class="p">}</span>
+</span><span id="line-16"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span id="line-17">  <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_DSN'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'mysql:host=localhost;dbname=test'</span><span class="p">;</span>
+</span><span id="line-18">  <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_USER'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'root'</span><span class="p">;</span>
+</span><span id="line-19">  <span class="nv">$config</span><span class="p">[</span><span class="s1">'ENV'</span><span class="p">][</span><span class="s1">'PDOTEST_PASS'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+</span><span id="line-20"><span class="p">}</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="k">return</span> <span class="nv">$config</span><span class="p">;</span>
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample014-phpt"><span class="std std-ref">sample014.phpt</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The destination tests for this example are not included. See the PDO extension tests for
+reference to live tests using this section.</p>
+</div>
+</section>
+<section id="cgi">
+<h2><code class="docutils literal notranslate"><span class="pre">--CGI--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#cgi" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cgi'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This section takes no value. It merely provides a simple marker for tests that MUST
+be run as CGI, even if there is no <code class="docutils literal notranslate"><span class="pre">--POST--</span></code> or <code class="docutils literal notranslate"><span class="pre">--GET--</span></code> sections in the test file.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> No value, just the <code class="docutils literal notranslate"><span class="pre">--CGI--</span></code> statement.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--CGI--
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample016-phpt"><span class="std std-ref">sample016.phpt</span></a></p>
+</section>
+<section id="xfail">
+<h2><code class="docutils literal notranslate"><span class="pre">--XFAIL--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#xfail" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#xfail'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This section identifies this test as one that is currently expected to fail. It
+should include a brief description of why it’s expected to fail. Reasons for such expectations
+include tests that are written before the functionality they are testing is implemented or notice of
+a bug which is due to upstream code such as an extension which provides PHP support for some other
+software.</p>
+<p>Please do NOT include an <code class="docutils literal notranslate"><span class="pre">--XFAIL--</span></code> without providing a text description for the reason it’s
+being used.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> A short plain text description of why this test is currently expected to fail.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--XFAIL--
+</span><span id="line-2">This bug might be still open on aix5.2-ppc64 and hpux11.23-ia64
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample017-phpt"><span class="std std-ref">sample017.phpt</span></a></p>
+</section>
+<section id="flaky">
+<h2><code class="docutils literal notranslate"><span class="pre">--FLAKY--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#flaky" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#flaky'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> This section identifies this test as one that occasionally fails. If the test
+actually fails, it will be retried one more time, and that result will be reported. The section
+should include a brief description of why the test is flaky. Reasons for this include tests that
+rely on relatively precise timing, or temporary disc states. Available as of PHP 8.1.22 and 8.2.9,
+respectively.</p>
+<p>Please do NOT include a <code class="docutils literal notranslate"><span class="pre">--FLAKY--</span></code> section without providing a text description for the reason it
+is being used.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> A short plain text description of why this test is flaky.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="n">FLAKY</span><span class="o">--</span>
+</span><span id="line-2"><span class="n">This</span> <span class="n">test</span> <span class="n">frequently</span> <span class="n">fails</span> <span class="ow">in</span> <span class="n">CI</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): flaky.phpt</p>
+</section>
+<section id="expectheaders">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECTHEADERS--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expectheaders" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expectheaders'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> The expected headers. Any header specified here must exist in the response and have
+the same value or the test fails. Additional headers found in the actual tests while running are
+ignored.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Format:</strong> HTTP style headers. May include multiple lines.</p>
+<p>Example 1 (snippet):</p>
+<p>–EXPECTHEADERS– Status: 404</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTHEADERS--
+</span><span id="line-2">Content-type: text/html; charset=UTF-8
+</span><span id="line-3">Status: 403 Access Denied
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample018-phpt"><span class="std std-ref">sample018.phpt</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The destination tests for this example are not included. See the phar extension tests for
+reference to live tests using this section.</p>
+</div>
+</section>
+<section id="expect">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expect" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expect'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> The expected output from the test script. This must match the actual output from
+the test script exactly for the test to pass.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code> type sections is required.</p>
+<p><strong>Format:</strong> Plain text. Multiple lines of text are allowed.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECT--
+</span><span id="line-2">array(2) {
+</span><span id="line-3">  ["hello"]=&gt;
+</span><span id="line-4">  string(5) "World"
+</span><span id="line-5">  ["goodbye"]=&gt;
+</span><span id="line-6">  string(7) "MrChips"
+</span><span id="line-7">}
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample002-phpt"><span class="std std-ref">sample002.phpt</span></a></p>
+</section>
+<section id="expect-external">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECT_EXTERNAL--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expect-external" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expect-external'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Similar to <code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code> section, but just stating a filename where to load the
+expected output from.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code> type sections is required.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECT_EXTERNAL--
+</span><span id="line-2">test001.expected.txt
+</span></code></pre></div>
+</div>
+<p><em>test001.expected.txt</em></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">array</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="line-2">  <span class="p">[</span><span class="s2">"hello"</span><span class="p">]</span><span class="o">=&gt;</span>
+</span><span id="line-3">  <span class="nx">string</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="s2">"World"</span>
+</span><span id="line-4">  <span class="p">[</span><span class="s2">"goodbye"</span><span class="p">]</span><span class="o">=&gt;</span>
+</span><span id="line-5">  <span class="nx">string</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="s2">"MrChips"</span>
+</span><span id="line-6"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="expectf">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECTF--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expectf" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expectf'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> An alternative of <code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code>. Where it differs from <code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code> is that it
+uses a number of substitution tags for strings, spaces, digits, etc. that appear in test case output
+but which may vary between test runs. The most common example of this is to use %s and %d to match
+the file path and line number which are output by PHP Warnings.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code> type sections is required.</p>
+<p><strong>Format:</strong> Plain text including tags which are inserted to represent different types of output
+which are not guaranteed to have the same value on subsequent runs or when run on different
+platforms.</p>
+<p>The following is a list of all tags and what they are used to represent:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%e</span></code>: Represents a directory separator, for example / on Linux.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%s</span></code>: One or more of anything (character or white space) except the end of line character.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%S</span></code>: Zero or more of anything (character or white space) except the end of line character.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%a</span></code>: One or more of anything (character or white space) including the end of line
+character.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%A</span></code>: Zero or more of anything (character or white space) including the end of line
+character.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%w</span></code>: Zero or more white space characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%i</span></code>: A signed integer value, for example +3142, -3142, 3142.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%d</span></code>: An unsigned integer value, for example 123456.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%x</span></code>: One or more hexadecimal character. That is, characters in the range 0-9, a-f, A-F.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%f</span></code>: A floating point number, for example: 3.142, -3.142, 3.142E-10, 3.142e+10.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%c</span></code>: A single character of any sort (.).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%r...%r</span></code>: Any string (…) enclosed between two <code class="docutils literal notranslate"><span class="pre">%r</span></code> will be treated as a regular
+expression.</p></li>
+</ul>
+</div></blockquote>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTF--
+</span><span id="line-2">string(4) "test"
+</span><span id="line-3">string(18) "http://example.com"
+</span><span id="line-4">string(27) "&amp;#60;b&amp;#62;test&amp;#60;/b&amp;#62;"
+</span><span id="line-5">
+</span><span id="line-6">Notice: Object of class stdClass could not be converted to int in %ssample001.php on line %d
+</span><span id="line-7">bool(false)
+</span><span id="line-8">string(6) "string"
+</span><span id="line-9">float(12345.7)
+</span><span id="line-10">string(29) "&amp;#60;p&amp;#62;string&amp;#60;/p&amp;#62;"
+</span><span id="line-11">bool(false)
+</span><span id="line-12">
+</span><span id="line-13">Warning: filter_var() expects parameter 2 to be long, string given in %s011.php on line %d
+</span><span id="line-14">NULL
+</span><span id="line-15">
+</span><span id="line-16">Warning: filter_input() expects parameter 3 to be long, string given in %s011.php on line %d
+</span><span id="line-17">NULL
+</span><span id="line-18">
+</span><span id="line-19">Warning: filter_var() expects at most 3 parameters, 5 given in %s011.php on line %d
+</span><span id="line-20">NULL
+</span><span id="line-21">
+</span><span id="line-22">Warning: filter_var() expects at most 3 parameters, 5 given in %s011.php on line %d
+</span><span id="line-23">NULL
+</span><span id="line-24">Done
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample001-phpt"><span class="std std-ref">sample001.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTF--
+</span><span id="line-2">Warning: bzopen() expects exactly 2 parameters, 0 given in %s on line %d NULL
+</span><span id="line-3">
+</span><span id="line-4">Warning: bzopen(): '' is not a valid mode for bzopen(). Only 'w' and 'r' are supported. in %s on line %d
+</span><span id="line-5">bool(false)
+</span><span id="line-6">
+</span><span id="line-7">Warning: bzopen(): filename cannot be empty in %s on line %d
+</span><span id="line-8">bool(false)
+</span><span id="line-9">
+</span><span id="line-10">Warning: bzopen(): filename cannot be empty in %s on line %d
+</span><span id="line-11">bool(false)
+</span><span id="line-12">
+</span><span id="line-13">Warning: bzopen(): 'x' is not a valid mode for bzopen(). Only 'w' and 'r' are supported. in %s on line %d
+</span><span id="line-14">bool(false)
+</span><span id="line-15">
+</span><span id="line-16">Warning: bzopen(): 'rw' is not a valid mode for bzopen(). Only 'w' and 'r' are supported. in %s on line %d
+</span><span id="line-17">bool(false)
+</span><span id="line-18">
+</span><span id="line-19">Warning: bzopen(no_such_file): failed to open stream: No such file or directory in %s on line %d
+</span><span id="line-20">bool(false)
+</span><span id="line-21">resource(%d) of type (stream) Done
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample019-phpt"><span class="std std-ref">sample019.phpt</span></a></p>
+<p>Example 3 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTF--
+</span><span id="line-2">object(DOMNodeList)#%d (0) {
+</span><span id="line-3">}
+</span><span id="line-4">int(0)
+</span><span id="line-5">bool(true)
+</span><span id="line-6">bool(true)
+</span><span id="line-7">string(0) ""
+</span><span id="line-8">bool(true)
+</span><span id="line-9">bool(true)
+</span><span id="line-10">bool(false)
+</span><span id="line-11">bool(false)
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample020-phpt"><span class="std std-ref">sample020.phpt</span></a></p>
+<p><code class="docutils literal notranslate"><span class="pre">/ext/standard/tests/strings/str_shuffle.phpt</span></code> is a good example for using <code class="docutils literal notranslate"><span class="pre">EXPECTF</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">EXPECT</span></code>. From time to time the algorithm used for shuffle changed and sometimes the machine used
+to execute the code has influence on the result of shuffle. But it always returns a three character
+string detectable by <code class="docutils literal notranslate"><span class="pre">%s</span></code> (that matches any string until the end of the line). Other scan-able
+forms are <code class="docutils literal notranslate"><span class="pre">%a</span></code> for any amount of chars (at least one), <code class="docutils literal notranslate"><span class="pre">%i</span></code> for integers, <code class="docutils literal notranslate"><span class="pre">%d</span></code> for numbers
+only, <code class="docutils literal notranslate"><span class="pre">%f</span></code> for floating point values, <code class="docutils literal notranslate"><span class="pre">%c</span></code> for single characters, <code class="docutils literal notranslate"><span class="pre">%x</span></code> for hexadecimal values,
+<code class="docutils literal notranslate"><span class="pre">%w</span></code> for any number of whitespace characters and <code class="docutils literal notranslate"><span class="pre">%e</span></code> for <code class="docutils literal notranslate"><span class="pre">DIRECTORY_SEPARATOR</span></code> (<code class="docutils literal notranslate"><span class="pre">'\'</span></code> or
+<code class="docutils literal notranslate"><span class="pre">'/'</span></code>).</p>
+<p><em>/ext/standard/tests/strings/str_shuffle.phpt</em></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nx">Testing</span> <span class="nb">str_shuffle</span><span class="o">.</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-4"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-5"><span class="cm">/* Do not change this test it is a README.TESTING example. */</span>
+</span><span id="line-6"><span class="nv">$s</span> <span class="o">=</span> <span class="s1">'123'</span><span class="p">;</span>
+</span><span id="line-7"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">str_shuffle</span><span class="p">(</span><span class="nv">$s</span><span class="p">));</span>
+</span><span id="line-8"><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$s</span><span class="p">);</span>
+</span><span id="line-9"><span class="cp">?&gt;</span>
+</span><span id="line-10"><span class="x">--EXPECTF--</span>
+</span><span id="line-11"><span class="x">string(3) "%s"</span>
+</span><span id="line-12"><span class="x">string(3) "123"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="expectf-external">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECTF_EXTERNAL--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expectf-external" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expectf-external'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Similar to <code class="docutils literal notranslate"><span class="pre">--EXPECTF--</span></code> section, but like the <code class="docutils literal notranslate"><span class="pre">--EXPECT_EXTERNAL--</span></code> section
+just stating a filename where to load the expected output from.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code> type sections is required.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+</section>
+<section id="expectregex">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECTREGEX--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expectregex" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expectregex'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> An alternative of <code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code>. This form allows the tester to specify the result
+in a regular expression.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code> type sections is required.</p>
+<p><strong>Format:</strong> Plain text including regular expression patterns which represent data that can vary
+between subsequent runs of a test or when run on different platforms.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTREGEX--
+</span><span id="line-2">M_E       : 2.718281[0-9]*
+</span><span id="line-3">M_LOG2E   : 1.442695[0-9]*
+</span><span id="line-4">M_LOG10E  : 0.434294[0-9]*
+</span><span id="line-5">M_LN2     : 0.693147[0-9]*
+</span><span id="line-6">M_LN10    : 2.302585[0-9]*
+</span><span id="line-7">M_PI      : 3.141592[0-9]*
+</span><span id="line-8">M_PI_2    : 1.570796[0-9]*
+</span><span id="line-9">M_PI_4    : 0.785398[0-9]*
+</span><span id="line-10">M_1_PI    : 0.318309[0-9]*
+</span><span id="line-11">M_2_PI    : 0.636619[0-9]*
+</span><span id="line-12">M_SQRTPI  : 1.772453[0-9]*
+</span><span id="line-13">M_2_SQRTPI: 1.128379[0-9]*
+</span><span id="line-14">M_LNPI    : 1.144729[0-9]*
+</span><span id="line-15">M_EULER   : 0.577215[0-9]*
+</span><span id="line-16">M_SQRT2   : 1.414213[0-9]*
+</span><span id="line-17">M_SQRT1_2 : 0.707106[0-9]*
+</span><span id="line-18">M_SQRT3   : 1.732050[0-9]*
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample021-phpt"><span class="std std-ref">sample021.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTF--
+</span><span id="line-2">*** Testing imap_append() : basic functionality ***
+</span><span id="line-3">Create a new mailbox for test
+</span><span id="line-4">Create a temporary mailbox and add 0 msgs
+</span><span id="line-5">.. mailbox '%s' created
+</span><span id="line-6">Add a couple of msgs to new mailbox {%s}INBOX.%s
+</span><span id="line-7">bool(true)
+</span><span id="line-8">bool(true)
+</span><span id="line-9">Msg Count after append : 2
+</span><span id="line-10">List the msg headers
+</span><span id="line-11">array(2) {
+</span><span id="line-12">  [0]=&gt;
+</span><span id="line-13">  string(%d) "%w%s       1)%s webmaster@something. Test message (%d chars)"
+</span><span id="line-14">  [1]=&gt;
+</span><span id="line-15">  string(%d) "%w%s       2)%s webmaster@something. Another test (%d chars)"
+</span><span id="line-16">}
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample025-phpt"><span class="std std-ref">sample025.phpt</span></a></p>
+<p>Example 3 (snippet):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">--EXPECTREGEX--
+</span><span id="line-2">string\(4\) \"-012\"
+</span><span id="line-3">string\(8\) \"2d303132\"
+</span><span id="line-4">(string\(13\) \"   4294967284\"|string\(20\) \"18446744073709551604\")
+</span><span id="line-5">(string\(26\) \"20202034323934393637323834\"|string\(40\) \"3138343436373434303733373039353531363034\")
+</span></code></pre></div>
+</div>
+<p>Example 3 (full): <a class="reference internal" href="../samples/index.html#sample023-phpt"><span class="std std-ref">sample023.phpt</span></a></p>
+<p><code class="docutils literal notranslate"><span class="pre">/ext/standard/tests/strings/strings001.phpt</span></code> is a good example for using <code class="docutils literal notranslate"><span class="pre">EXPECTREGEX</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code>. This test also shows that in <code class="docutils literal notranslate"><span class="pre">EXPECTREGEX</span></code> some characters need to be escaped since
+otherwise they would be interpreted as a regular expression.</p>
+<p><em>/ext/standard/tests/strings/strings001.phpt</em></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">TEST</span><span class="o">--</span>
+</span><span id="line-2"><span class="nx">Test</span> <span class="nx">whether</span> <span class="nb">strstr</span><span class="p">()</span> <span class="k">and</span> <span class="nb">strrchr</span><span class="p">()</span> <span class="nx">are</span> <span class="nx">binary</span> <span class="nx">safe</span><span class="o">.</span>
+</span><span id="line-3"><span class="o">--</span><span class="nx">FILE</span><span class="o">--</span>
+</span><span id="line-4"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-5"><span class="cm">/* Do not change this test it is a README.TESTING example. */</span>
+</span><span id="line-6"><span class="nv">$s</span> <span class="o">=</span> <span class="s2">"alabala nica"</span><span class="o">.</span><span class="nb">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="s2">"turska panica"</span><span class="p">;</span>
+</span><span id="line-7"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">strstr</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="s2">"nic"</span><span class="p">));</span>
+</span><span id="line-8"><span class="nb">var_dump</span><span class="p">(</span><span class="nb">strrchr</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span><span class="s2">" nic"</span><span class="p">));</span>
+</span><span id="line-9"><span class="cp">?&gt;</span>
+</span><span id="line-10"><span class="x">--EXPECTREGEX--</span>
+</span><span id="line-11"><span class="x">string\(18\) \"nica\x00turska panica\"</span>
+</span><span id="line-12"><span class="x">string\(19\) \" nica\x00turska panica\"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="expectregex-external">
+<h2><code class="docutils literal notranslate"><span class="pre">--EXPECTREGEX_EXTERNAL--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#expectregex-external" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#expectregex-external'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Similar to <code class="docutils literal notranslate"><span class="pre">--EXPECTREGEX--</span></code> section, but like the <code class="docutils literal notranslate"><span class="pre">--EXPECT_EXTERNAL--</span></code>
+section just stating a filename where to load the expected output from.</p>
+<p><strong>Required:</strong> One of the <code class="docutils literal notranslate"><span class="pre">EXPECT</span></code> type sections is required.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+</section>
+<section id="clean">
+<h2><code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#clean" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#clean'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><strong>Description:</strong> Code that is executed after a test completes. It’s main purpose is to allow you to
+clean up after yourself. You might need to remove files created during the test or close sockets or
+database connections following a test. Infact, even if a test fails or encounters a fatal error
+during the test, the code found in the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section will still run.</p>
+<p>Code in the clean section is run in a completely different process than the one the test was run in.
+So do not try accessing variables you created in the <code class="docutils literal notranslate"><span class="pre">--FILE--</span></code> section from inside the
+<code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section, they won’t exist.</p>
+<p>Using the switch <code class="docutils literal notranslate"><span class="pre">--no-clean</span></code> on <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code>, you can prevent the code found in the
+<code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section of a test from running. This allows you to inspect generated data or files
+without them being removed by the <code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code> section.</p>
+<p><strong>Required:</strong> No.</p>
+<p><strong>Test Script Support:</strong> <code class="docutils literal notranslate"><span class="pre">run-tests.php</span></code></p>
+<p><strong>Format:</strong> PHP source code enclosed by PHP tags.</p>
+<p>Example 1 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">CLEAN</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="nb">unlink</span><span class="p">(</span><span class="no">__DIR__</span><span class="o">.</span><span class="s1">'/DomDocument_save_basic.tmp'</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 1 (full): <a class="reference internal" href="../samples/index.html#sample024-phpt"><span class="std std-ref">sample024.phpt</span></a></p>
+<p>Example 2 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">CLEAN</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="k">require_once</span><span class="p">(</span><span class="s1">'clean.inc'</span><span class="p">);</span>
+</span><span id="line-4"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 2 (full): <a class="reference internal" href="../samples/index.html#sample025-phpt"><span class="std std-ref">sample025.phpt</span></a></p>
+<p>Example 3 (snippet):</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="o">--</span><span class="nx">CLEAN</span><span class="o">--</span>
+</span><span id="line-2"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span id="line-3"><span class="nv">$key</span> <span class="o">=</span> <span class="nb">ftok</span><span class="p">(</span><span class="no">__DIR__</span><span class="o">.</span><span class="s1">'/003.phpt'</span><span class="p">,</span> <span class="s1">'q'</span><span class="p">);</span>
+</span><span id="line-4"><span class="nv">$s</span> <span class="o">=</span> <span class="nb">shm_attach</span><span class="p">(</span><span class="nv">$key</span><span class="p">);</span>
+</span><span id="line-5"><span class="nb">shm_remove</span><span class="p">(</span><span class="nv">$s</span><span class="p">);</span>
+</span><span id="line-6"><span class="cp">?&gt;</span>
+</span></code></pre></div>
+</div>
+<p>Example 3 (full): <a class="reference internal" href="../samples/index.html#sample022-phpt"><span class="std std-ref">sample022.phpt</span></a></p>
+</section>
+</section>
+</div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
+<div class="mr-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="../index.html">
+<svg class="mr-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="15 18 9 12 15 6"></polyline>
+</svg>
+        Writing Tests
+      </a>
+</div>
+<div class="ml-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="../samples/index.html">
+        Samples
+        <svg class="ml-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</a>
+</div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#test'" class="reference internal" href="#test"><code class="docutils literal notranslate"><span class="pre">--TEST--</span></code></a></li>
+<li><a :data-current="activeSection === '#description'" class="reference internal" href="#description"><code class="docutils literal notranslate"><span class="pre">--DESCRIPTION--</span></code></a></li>
+<li><a :data-current="activeSection === '#credits'" class="reference internal" href="#credits"><code class="docutils literal notranslate"><span class="pre">--CREDITS--</span></code></a></li>
+<li><a :data-current="activeSection === '#skipif'" class="reference internal" href="#skipif"><code class="docutils literal notranslate"><span class="pre">--SKIPIF--</span></code></a></li>
+<li><a :data-current="activeSection === '#conflicts'" class="reference internal" href="#conflicts"><code class="docutils literal notranslate"><span class="pre">--CONFLICTS--</span></code></a></li>
+<li><a :data-current="activeSection === '#whitespace-sensitive'" class="reference internal" href="#whitespace-sensitive"><code class="docutils literal notranslate"><span class="pre">--WHITESPACE_SENSITIVE--</span></code></a></li>
+<li><a :data-current="activeSection === '#capture-stdio'" class="reference internal" href="#capture-stdio"><code class="docutils literal notranslate"><span class="pre">--CAPTURE_STDIO--</span></code></a></li>
+<li><a :data-current="activeSection === '#extensions'" class="reference internal" href="#extensions"><code class="docutils literal notranslate"><span class="pre">--EXTENSIONS--</span></code></a></li>
+<li><a :data-current="activeSection === '#post'" class="reference internal" href="#post"><code class="docutils literal notranslate"><span class="pre">--POST--</span></code></a></li>
+<li><a :data-current="activeSection === '#post-raw'" class="reference internal" href="#post-raw"><code class="docutils literal notranslate"><span class="pre">--POST_RAW--</span></code></a></li>
+<li><a :data-current="activeSection === '#put'" class="reference internal" href="#put"><code class="docutils literal notranslate"><span class="pre">--PUT--</span></code></a></li>
+<li><a :data-current="activeSection === '#gzip-post'" class="reference internal" href="#gzip-post"><code class="docutils literal notranslate"><span class="pre">--GZIP_POST--</span></code></a></li>
+<li><a :data-current="activeSection === '#deflate-post'" class="reference internal" href="#deflate-post"><code class="docutils literal notranslate"><span class="pre">--DEFLATE_POST--</span></code></a></li>
+<li><a :data-current="activeSection === '#get'" class="reference internal" href="#get"><code class="docutils literal notranslate"><span class="pre">--GET--</span></code></a></li>
+<li><a :data-current="activeSection === '#cookie'" class="reference internal" href="#cookie"><code class="docutils literal notranslate"><span class="pre">--COOKIE--</span></code></a></li>
+<li><a :data-current="activeSection === '#stdin'" class="reference internal" href="#stdin"><code class="docutils literal notranslate"><span class="pre">--STDIN--</span></code></a></li>
+<li><a :data-current="activeSection === '#ini'" class="reference internal" href="#ini"><code class="docutils literal notranslate"><span class="pre">--INI--</span></code></a></li>
+<li><a :data-current="activeSection === '#args'" class="reference internal" href="#args"><code class="docutils literal notranslate"><span class="pre">--ARGS--</span></code></a></li>
+<li><a :data-current="activeSection === '#env'" class="reference internal" href="#env"><code class="docutils literal notranslate"><span class="pre">--ENV--</span></code></a></li>
+<li><a :data-current="activeSection === '#phpdbg'" class="reference internal" href="#phpdbg"><code class="docutils literal notranslate"><span class="pre">--PHPDBG--</span></code></a></li>
+<li><a :data-current="activeSection === '#file'" class="reference internal" href="#file"><code class="docutils literal notranslate"><span class="pre">--FILE--</span></code></a></li>
+<li><a :data-current="activeSection === '#fileeof'" class="reference internal" href="#fileeof"><code class="docutils literal notranslate"><span class="pre">--FILEEOF--</span></code></a></li>
+<li><a :data-current="activeSection === '#file-external'" class="reference internal" href="#file-external"><code class="docutils literal notranslate"><span class="pre">--FILE_EXTERNAL--</span></code></a></li>
+<li><a :data-current="activeSection === '#redirecttest'" class="reference internal" href="#redirecttest"><code class="docutils literal notranslate"><span class="pre">--REDIRECTTEST--</span></code></a></li>
+<li><a :data-current="activeSection === '#cgi'" class="reference internal" href="#cgi"><code class="docutils literal notranslate"><span class="pre">--CGI--</span></code></a></li>
+<li><a :data-current="activeSection === '#xfail'" class="reference internal" href="#xfail"><code class="docutils literal notranslate"><span class="pre">--XFAIL--</span></code></a></li>
+<li><a :data-current="activeSection === '#flaky'" class="reference internal" href="#flaky"><code class="docutils literal notranslate"><span class="pre">--FLAKY--</span></code></a></li>
+<li><a :data-current="activeSection === '#expectheaders'" class="reference internal" href="#expectheaders"><code class="docutils literal notranslate"><span class="pre">--EXPECTHEADERS--</span></code></a></li>
+<li><a :data-current="activeSection === '#expect'" class="reference internal" href="#expect"><code class="docutils literal notranslate"><span class="pre">--EXPECT--</span></code></a></li>
+<li><a :data-current="activeSection === '#expect-external'" class="reference internal" href="#expect-external"><code class="docutils literal notranslate"><span class="pre">--EXPECT_EXTERNAL--</span></code></a></li>
+<li><a :data-current="activeSection === '#expectf'" class="reference internal" href="#expectf"><code class="docutils literal notranslate"><span class="pre">--EXPECTF--</span></code></a></li>
+<li><a :data-current="activeSection === '#expectf-external'" class="reference internal" href="#expectf-external"><code class="docutils literal notranslate"><span class="pre">--EXPECTF_EXTERNAL--</span></code></a></li>
+<li><a :data-current="activeSection === '#expectregex'" class="reference internal" href="#expectregex"><code class="docutils literal notranslate"><span class="pre">--EXPECTREGEX--</span></code></a></li>
+<li><a :data-current="activeSection === '#expectregex-external'" class="reference internal" href="#expectregex-external"><code class="docutils literal notranslate"><span class="pre">--EXPECTREGEX_EXTERNAL--</span></code></a></li>
+<li><a :data-current="activeSection === '#clean'" class="reference internal" href="#clean"><code class="docutils literal notranslate"><span class="pre">--CLEAN--</span></code></a></li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.1.0</a></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+<script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+<script defer="defer" src="../../../_static/theme.js?v=5db23cf8"></script>
+<script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html :class="{ 'dark' : darkMode === true }" data-content_root="../../" lang="en" x-data="{ darkMode: $persist(window.matchMedia('(prefers-color-scheme: dark)').matches), activeSection: ''}">
+<head>
+<script>
+    (function () {
+      // Set initial color scheme
+      if ((localStorage.getItem("_x_darkMode") === "true") || (window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+      }
+
+      // Watch for media preference changes
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+        localStorage.setItem("_x_darkMode", event.matches);
+        document.documentElement.classList.toggle("dark", event.matches);
+      });
+    })();
+  </script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>zval | php-src docs</title>
+<meta content="zval | php-src docs" property="og:title"/>
+<meta content="zval | php-src docs" name="twitter:title"/>
+<link href="../../_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
+<link href="../../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/code-no-font-ligatures.css?v=7445b7a4" rel="stylesheet" type="text/css"/>
+<link href="../../_static/awesome-sphinx-design.css?v=a81faafa" rel="stylesheet" type="text/css"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="../../genindex.html" rel="index" title="Index"/>
+<link href="zend_string.html" rel="next" title="zend_string"/>
+<link href="index.html" rel="prev" title="Data Structures"/>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-xs border-border bg-background/90 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="../../index.html"><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">php-src docs</span>
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 gap-2 sm:gap-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center gap-1">
+<a href="https://github.com/php/php-src" rel="noopener nofollow" title="Visit repository on GitHub">
+<div class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9">
+<svg fill="currentColor" height="26px" style="margin-top:-2px;display:inline" viewbox="0 0 45 44" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.477.927C10.485.927.76 10.65.76 22.647c0 9.596 6.223 17.736 14.853 20.608 1.087.2 1.483-.47 1.483-1.047 0-.516-.019-1.881-.03-3.693-6.04 1.312-7.315-2.912-7.315-2.912-.988-2.51-2.412-3.178-2.412-3.178-1.972-1.346.149-1.32.149-1.32 2.18.154 3.327 2.24 3.327 2.24 1.937 3.318 5.084 2.36 6.321 1.803.197-1.403.759-2.36 1.379-2.903-4.823-.548-9.894-2.412-9.894-10.734 0-2.37.847-4.31 2.236-5.828-.224-.55-.969-2.759.214-5.748 0 0 1.822-.584 5.972 2.226 1.732-.482 3.59-.722 5.437-.732 1.845.01 3.703.25 5.437.732 4.147-2.81 5.967-2.226 5.967-2.226 1.185 2.99.44 5.198.217 5.748 1.392 1.517 2.232 3.457 2.232 5.828 0 8.344-5.078 10.18-9.916 10.717.779.67 1.474 1.996 1.474 4.021 0 2.904-.027 5.247-.027 5.96 0 .58.392 1.256 1.493 1.044C37.981 40.375 44.2 32.24 44.2 22.647c0-11.996-9.726-21.72-21.722-21.72" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+</a>
+<button @click="darkMode = !darkMode" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" title="Toggle color scheme" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="16" viewbox="0 96 960 960" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="justify-start text-sm md:!hidden bg-background" href="../../index.html"><span class="font-bold text-clip whitespace-nowrap">php-src docs</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/high-level-overview.html">High-level overview</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../introduction/ides/index.html">IDEs<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/ides/visual-studio-code.html">Visual Studio Code</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul class="current">
+<li class="toctree-l1 current" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="index.html">Data Structures<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul class="current" x-show="expanded">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">zval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zend_string.html">zend_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zend_constant.html">zend_constant</a></li>
+</ul>
+</li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../memory-management/index.html">Memory Management<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../memory-management/reference-counting.html">Reference Counting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../output-buffering.html">Output Buffering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../streams/index.html">Streams</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extensions/parameter-parsing.html">Parameter Parsing</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../extensions/bundled-extensions.html">Bundled Extensions<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../extensions/bundled-extensions/filter.html">ext/filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../extensions/unbundled-extensions.html">Unbundled Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/running-tests/index.html">Running Tests</a></li>
+<li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../../testing/writing-tests/index.html">Writing Tests<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
+<li class="toctree-l2"><a class="reference internal" href="../../testing/writing-tests/index.html">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/writing-tests/sections/index.html">Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing/writing-tests/samples/index.html">Samples</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../miscellaneous/stubs.html">Stubs</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../index.html">
+<span class="hidden md:inline">php-src docs</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Data Structures</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">zval</span>
+</nav>
+<div id="content" role="main">
+<section id="zval">
+<h1>zval<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#zval"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>PHP is a dynamic language. A variable can typically contain a value of any type, and the type of the
+variable may even change during the execution of the program. Under the hood, this is implemented
+through the <code class="docutils literal notranslate"><span class="pre">zval</span></code> struct. It is one of the most important data structures in php-src. It is
+implemented as a “tagged union”, meaning it stores what type of value it contains, and the value
+itself. Let’s look at the type first.</p>
+<section id="zval-types">
+<h2>zval types<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#zval-types" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#zval-types'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="cp">#define IS_UNDEF     0 </span><span class="cm">/* A variable that was never written to. */</span>
+</span><span id="line-2"><span class="cp">#define IS_NULL      1</span>
+</span><span id="line-3"><span class="cp">#define IS_FALSE     2</span>
+</span><span id="line-4"><span class="cp">#define IS_TRUE      3</span>
+</span><span id="line-5"><span class="cp">#define IS_LONG      4 </span><span class="cm">/* An integer value. */</span>
+</span><span id="line-6"><span class="cp">#define IS_DOUBLE    5 </span><span class="cm">/* A floating point value. */</span>
+</span><span id="line-7"><span class="cp">#define IS_STRING    6</span>
+</span><span id="line-8"><span class="cp">#define IS_ARRAY     7</span>
+</span><span id="line-9"><span class="cp">#define IS_OBJECT    8</span>
+</span><span id="line-10"><span class="cp">#define IS_RESOURCE  9</span>
+</span><span id="line-11"><span class="cp">#define IS_REFERENCE 10</span>
+</span></code></pre></div>
+</div>
+<p>These simple integer constants determine what value is currently stored in a variable. If you are a
+PHP developer, these types should sound fairly familiar. They are pretty much an exact reflection of
+the types you may use in regular PHP code. One small oddity is that <code class="docutils literal notranslate"><span class="pre">IS_FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">IS_TRUE</span></code> are
+implemented as separate types, instead of as a <code class="docutils literal notranslate"><span class="pre">IS_BOOL</span></code> type.</p>
+<p>Some of these types are self-contained, they don’t store any auxiliary data. This includes
+<code class="docutils literal notranslate"><span class="pre">IS_UNDEF</span></code>, <code class="docutils literal notranslate"><span class="pre">IS_NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">IS_FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">IS_TRUE</span></code>. For the rest of the types, we are going to
+require some additional memory to store the actual value of the variable.</p>
+</section>
+<section id="zend-value">
+<h2>zend_value<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#zend-value" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#zend-value'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">typedef</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="nc">_zend_value</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-2"><span class="w">    </span><span class="n">zend_long</span><span class="w">         </span><span class="n">lval</span><span class="p">;</span><span class="w"> </span><span class="cm">/* long value, i.e. int. */</span>
+</span><span id="line-3"><span class="w">    </span><span class="kt">double</span><span class="w">            </span><span class="n">dval</span><span class="p">;</span><span class="w"> </span><span class="cm">/* double value, i.e. float. */</span>
+</span><span id="line-4"><span class="w">    </span><span class="n">zend_refcounted</span><span class="w">  </span><span class="o">*</span><span class="n">counted</span><span class="p">;</span>
+</span><span id="line-5"><span class="w">    </span><span class="n">zend_string</span><span class="w">      </span><span class="o">*</span><span class="n">str</span><span class="p">;</span>
+</span><span id="line-6"><span class="w">    </span><span class="n">zend_array</span><span class="w">       </span><span class="o">*</span><span class="n">arr</span><span class="p">;</span>
+</span><span id="line-7"><span class="w">    </span><span class="n">zend_object</span><span class="w">      </span><span class="o">*</span><span class="n">obj</span><span class="p">;</span>
+</span><span id="line-8"><span class="w">    </span><span class="n">zend_resource</span><span class="w">    </span><span class="o">*</span><span class="n">res</span><span class="p">;</span>
+</span><span id="line-9"><span class="w">    </span><span class="n">zend_reference</span><span class="w">   </span><span class="o">*</span><span class="n">ref</span><span class="p">;</span>
+</span><span id="line-10"><span class="w">    </span><span class="c1">// Less important for now.</span>
+</span><span id="line-11"><span class="w">    </span><span class="n">zend_ast_ref</span><span class="w">     </span><span class="o">*</span><span class="n">ast</span><span class="p">;</span>
+</span><span id="line-12"><span class="w">    </span><span class="n">zval</span><span class="w">             </span><span class="o">*</span><span class="n">zv</span><span class="p">;</span>
+</span><span id="line-13"><span class="w">    </span><span class="kt">void</span><span class="w">             </span><span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+</span><span id="line-14"><span class="w">    </span><span class="n">zend_class_entry</span><span class="w"> </span><span class="o">*</span><span class="n">ce</span><span class="p">;</span>
+</span><span id="line-15"><span class="w">    </span><span class="n">zend_function</span><span class="w">    </span><span class="o">*</span><span class="n">func</span><span class="p">;</span>
+</span><span id="line-16"><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-17"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">w1</span><span class="p">;</span>
+</span><span id="line-18"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">w2</span><span class="p">;</span>
+</span><span id="line-19"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="n">ww</span><span class="p">;</span>
+</span><span id="line-20"><span class="p">}</span><span class="w"> </span><span class="n">zend_value</span><span class="p">;</span>
+</span></code></pre></div>
+</div>
+<p>A C union is a data type that may store any one of its members at a time, by being (at least) as big
+as its biggest member. For example, <code class="docutils literal notranslate"><span class="pre">zend_value</span></code> may store the <code class="docutils literal notranslate"><span class="pre">lval</span></code> member, or the <code class="docutils literal notranslate"><span class="pre">dval</span></code>
+member, but never both at the same time. However, it doesn’t know which member is being stored.
+Remembering this is our job, and that’s exactly what the <code class="docutils literal notranslate"><span class="pre">IS_*</span></code> constants are for.</p>
+<p>The top members of <code class="docutils literal notranslate"><span class="pre">zend_value</span></code> mostly mirror the <code class="docutils literal notranslate"><span class="pre">IS_*</span></code> constants, with the exception of
+<code class="docutils literal notranslate"><span class="pre">counted</span></code>. <code class="docutils literal notranslate"><span class="pre">counted</span></code> polymorphically refers to any <a class="reference internal" href="../memory-management/reference-counting.html"><span class="std std-doc">reference-counted</span></a>
+value, including strings, arrays, objects, resources and references. <code class="docutils literal notranslate"><span class="pre">null</span></code> and <code class="docutils literal notranslate"><span class="pre">bool</span></code> are missing
+from <code class="docutils literal notranslate"><span class="pre">zend_value</span></code> because their types are self-contained.</p>
+<p>The rest of the fields aren’t important for now.</p>
+</section>
+<section id="id1">
+<h2>zval<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#id1" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#id1'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Together, the value and the tag make up the <code class="docutils literal notranslate"><span class="pre">zval</span></code>, along with some other fields. It may look
+intimidating at first. We’ll go over it step by step.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_zval_struct</span><span class="w"> </span><span class="n">zval</span><span class="p">;</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="k">struct</span><span class="w"> </span><span class="nc">_zval_struct</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-4"><span class="w">    </span><span class="n">zend_value</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="line-5"><span class="w">    </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-6"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">type_info</span><span class="p">;</span>
+</span><span id="line-7"><span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-8"><span class="w">            </span><span class="n">ZEND_ENDIAN_LOHI_3</span><span class="p">(</span>
+</span><span id="line-9"><span class="w">                </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="cm">/* active type */</span>
+</span><span id="line-10"><span class="w">                </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">type_flags</span><span class="p">,</span>
+</span><span id="line-11"><span class="w">                </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-12"><span class="w">                    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">extra</span><span class="p">;</span><span class="w"> </span><span class="cm">/* not further specified */</span>
+</span><span id="line-13"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="n">u</span><span class="p">)</span>
+</span><span id="line-14"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+</span><span id="line-15"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="n">u1</span><span class="p">;</span>
+</span><span id="line-16"><span class="w">    </span><span class="k">union</span><span class="w"> </span><span class="p">{</span>
+</span><span id="line-17"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">next</span><span class="p">;</span><span class="w">           </span><span class="cm">/* hash collision chain */</span>
+</span><span id="line-18"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">cache_slot</span><span class="p">;</span><span class="w">     </span><span class="cm">/* cache slot (for RECV_INIT) */</span>
+</span><span id="line-19"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">opline_num</span><span class="p">;</span><span class="w">     </span><span class="cm">/* opline number (for FAST_CALL) */</span>
+</span><span id="line-20"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">lineno</span><span class="p">;</span><span class="w">         </span><span class="cm">/* line number (for ast nodes) */</span>
+</span><span id="line-21"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">num_args</span><span class="p">;</span><span class="w">       </span><span class="cm">/* arguments number for EX(This) */</span>
+</span><span id="line-22"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">fe_pos</span><span class="p">;</span><span class="w">         </span><span class="cm">/* foreach position */</span>
+</span><span id="line-23"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">fe_iter_idx</span><span class="p">;</span><span class="w">    </span><span class="cm">/* foreach iterator index */</span>
+</span><span id="line-24"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">guard</span><span class="p">;</span><span class="w">          </span><span class="cm">/* recursion and single property guard */</span>
+</span><span id="line-25"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">constant_flags</span><span class="p">;</span><span class="w"> </span><span class="cm">/* constant flags */</span>
+</span><span id="line-26"><span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">extra</span><span class="p">;</span><span class="w">          </span><span class="cm">/* not further specified */</span>
+</span><span id="line-27"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="n">u2</span><span class="p">;</span>
+</span><span id="line-28"><span class="p">};</span>
+</span></code></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">zval.value</span></code> reserves space for the actual variable data, as discussed above.</p>
+<p><code class="docutils literal notranslate"><span class="pre">zval.u1</span></code> stores the variable type, the given <code class="docutils literal notranslate"><span class="pre">IS_*</span></code> constant, along with some other flags. It’s
+definition looks a bit complicated. You can think of the entire field as a 4 byte integer, split
+into 3 parts. <code class="docutils literal notranslate"><span class="pre">v.type</span></code> stores the actual variable type, <code class="docutils literal notranslate"><span class="pre">v.type_flags</span></code> is used for some
+<a class="reference internal" href="../memory-management/reference-counting.html"><span class="std std-doc">reference-counting</span></a> flags, and <code class="docutils literal notranslate"><span class="pre">v.u.extra</span></code> is pretty
+much unused.</p>
+<p><code class="docutils literal notranslate"><span class="pre">zval.u2</span></code> defines some more storage for various contexts that is often unoccupied. It’s there
+because the memory would otherwise be wasted due to padding, so we may as well make use of it. We’ll
+go over the relevant ones in their corresponding chapters.</p>
+</section>
+<section id="macros">
+<h2>Macros<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#macros" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#macros'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The fields in <code class="docutils literal notranslate"><span class="pre">zval</span></code> should never be accessed directly. Instead, there are a plethora of macros to
+access them, concealing some of the implementation details of the <code class="docutils literal notranslate"><span class="pre">zval</span></code> struct. For many macros,
+there’s a <code class="docutils literal notranslate"><span class="pre">_P</span></code>-suffixed variant that performs the same operation on a pointer to the given
+<code class="docutils literal notranslate"><span class="pre">zval</span></code>.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">zval</span></code> macros</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Macro</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Z_TYPE[_P]</span></code></p></td>
+<td><p>Access the <code class="docutils literal notranslate"><span class="pre">zval.u1.v.type</span></code> part of the type flags, containing the <code class="docutils literal notranslate"><span class="pre">IS_*</span></code> type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Z_LVAL[_P]</span></code></p></td>
+<td><p>Access the underlying <code class="docutils literal notranslate"><span class="pre">int</span></code> value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Z_DVAL[_P]</span></code></p></td>
+<td><p>Access the underlying <code class="docutils literal notranslate"><span class="pre">float</span></code> value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Z_STR[_P]</span></code></p></td>
+<td><p>Access the underlying <code class="docutils literal notranslate"><span class="pre">zend_string</span></code> pointer.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Z_STRVAL[_P]</span></code></p></td>
+<td><p>Access the strings raw <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">*</span></code> pointer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Z_STRLEN[_P]</span></code></p></td>
+<td><p>Access the strings length.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ZVAL_COPY_VALUE(t,</span> <span class="pre">s)</span></code></p></td>
+<td><p>Copy one <code class="docutils literal notranslate"><span class="pre">zval</span></code> to another, including type and value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ZVAL_COPY(t,</span> <span class="pre">s)</span></code></p></td>
+<td><p>Same as <code class="docutils literal notranslate"><span class="pre">ZVAL_COPY_VALUE</span></code>, but if the value is reference counted, increase the counter.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="other-zval-types">
+<h2>Other zval types<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#other-zval-types" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#other-zval-types'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">zval</span></code>s are sometimes used internally with types that don’t exist in userland.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="cp">#define IS_CONSTANT_AST 11</span>
+</span><span id="line-2"><span class="cp">#define IS_INDIRECT     12</span>
+</span><span id="line-3"><span class="cp">#define IS_PTR          13</span>
+</span><span id="line-4"><span class="cp">#define IS_ALIAS_PTR    14</span>
+</span><span id="line-5"><span class="cp">#define _IS_ERROR       15</span>
+</span></code></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">IS_CONSTANT_AST</span></code> is used to represent constant values (the right hand side of <code class="docutils literal notranslate"><span class="pre">const</span></code>,
+property/parameter initializers, etc.) before they are evaluated. The evaluation of a constant
+expression is not always possible during compilation, because they may contain references to values
+only available at runtime. Until that evaluation is possible, the constants contain the AST of the
+expression rather than the concrete values. When this flag is set, the <code class="docutils literal notranslate"><span class="pre">zval.value.ast</span></code> union member
+is set accordingly.</p>
+<p><code class="docutils literal notranslate"><span class="pre">IS_INDIRECT</span></code> indicates that the <code class="docutils literal notranslate"><span class="pre">zval.value.zv</span></code> member is populated. This field stores a
+pointer to some other <code class="docutils literal notranslate"><span class="pre">zval</span></code>. This type is mainly used in two situations, namely for intermediate
+values between <code class="docutils literal notranslate"><span class="pre">FETCH</span></code> and <code class="docutils literal notranslate"><span class="pre">ASSIGN</span></code> instructions, and for the sharing of variables in the symbol
+table.</p>
+<p><code class="docutils literal notranslate"><span class="pre">IS_PTR</span></code> is used for pointers to arbitrary data. Most commonly, this type is used internally for
+<code class="docutils literal notranslate"><span class="pre">HashTable</span></code>, as <code class="docutils literal notranslate"><span class="pre">HashTable</span></code> may only store <code class="docutils literal notranslate"><span class="pre">zval</span></code> values. For example, <code class="docutils literal notranslate"><span class="pre">EG(class_table)</span></code>
+represents the class table, which is a hash map of class names to the corresponding
+<code class="docutils literal notranslate"><span class="pre">zend_class_entry</span></code>, representing the class. The same goes for functions and many other data types.
+<code class="docutils literal notranslate"><span class="pre">IS_ALIAS_PTR</span></code> is used for class aliases registered via <code class="docutils literal notranslate"><span class="pre">class_alias</span></code>. Essentially, it just
+allows differencing between members in the class table that are aliases, or actual classes.
+Otherwise, it is essentially the same as <code class="docutils literal notranslate"><span class="pre">IS_PTR</span></code>. Arbitrary data is accessed through
+<code class="docutils literal notranslate"><span class="pre">zval.value.ptr</span></code>, and casted to the correct type depending on context. If <code class="docutils literal notranslate"><span class="pre">ptr</span></code> stores a class
+or function, the <code class="docutils literal notranslate"><span class="pre">zval.value.ce</span></code> or <code class="docutils literal notranslate"><span class="pre">zval.value.func</span></code> fields may be used, respectively.</p>
+<p><code class="docutils literal notranslate"><span class="pre">_IS_ERROR</span></code> is used as an error value for some object handlers.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="cm">/* Fake types used only for type hinting.</span>
+</span><span id="line-2"><span class="cm"> * These are allowed to overlap with the types below. */</span>
+</span><span id="line-3"><span class="cp">#define IS_CALLABLE 12</span>
+</span><span id="line-4"><span class="cp">#define IS_ITERABLE 13</span>
+</span><span id="line-5"><span class="cp">#define IS_VOID     14</span>
+</span><span id="line-6"><span class="cp">#define IS_STATIC   15</span>
+</span><span id="line-7"><span class="cp">#define IS_MIXED    16</span>
+</span><span id="line-8"><span class="cp">#define IS_NEVER    17</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="cm">/* used for casts */</span>
+</span><span id="line-11"><span class="cp">#define _IS_BOOL   18</span>
+</span><span id="line-12"><span class="cp">#define _IS_NUMBER 19</span>
+</span></code></pre></div>
+</div>
+<p>These flags are never actually stored in <code class="docutils literal notranslate"><span class="pre">zval.u1</span></code>. They are used for type hinting and in the
+object handler API.</p>
+<p>This only leaves the <code class="docutils literal notranslate"><span class="pre">zval.value.ww</span></code> field. In short, this field is used on 32-bit platforms when
+copying data from one <code class="docutils literal notranslate"><span class="pre">zval</span></code> to another. Normally, <code class="docutils literal notranslate"><span class="pre">zval.value.counted</span></code> is copied as a generic
+value, no matter what the actual underlying type is. <code class="docutils literal notranslate"><span class="pre">zend_value</span></code> always consists of 8 bytes due
+to the <code class="docutils literal notranslate"><span class="pre">double</span></code> field. Pointers, however, consist only of 4. Because we would otherwise miss the
+other 4 bytes, they are copied manually using <code class="docutils literal notranslate"><span class="pre">z-&gt;value.ww.w2</span> <span class="pre">=</span> <span class="pre">_w2;</span></code>. This happens in the
+<code class="docutils literal notranslate"><span class="pre">ZVAL_COPY_VALUE_EX</span></code> macro, you won’t ever have to care about this.</p>
+</section>
+</section>
+</div><div class="flex justify-between items-center pt-6 mt-12 border-t border-border gap-4">
+<div class="mr-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="index.html">
+<svg class="mr-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="15 18 9 12 15 6"></polyline>
+</svg>
+        Data Structures
+      </a>
+</div>
+<div class="ml-auto">
+<a class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4" href="zend_string.html">
+        zend_string
+        <svg class="ml-2 h-4 w-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</a>
+</div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#zval-types'" class="reference internal" href="#zval-types">zval types</a></li>
+<li><a :data-current="activeSection === '#zend-value'" class="reference internal" href="#zend-value">zend_value</a></li>
+<li><a :data-current="activeSection === '#id1'" class="reference internal" href="#id1">zval</a></li>
+<li><a :data-current="activeSection === '#macros'" class="reference internal" href="#macros">Macros</a></li>
+<li><a :data-current="activeSection === '#other-zval-types'" class="reference internal" href="#other-zval-types">Other zval types</a></li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.1.0</a></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+<script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+<script defer="defer" src="../../_static/theme.js?v=5db23cf8"></script>
+<script src="../../_static/design-tabs.js?v=f930bc37"></script>
+</body>
+</html>
