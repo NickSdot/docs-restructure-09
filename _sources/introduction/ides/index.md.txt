@@ -1,8 +1,9 @@
 # IDEs
 
 ```{toctree}
-:hidden: true
-
+---
+hidden: true
+---
 visual-studio-code
 ```
 

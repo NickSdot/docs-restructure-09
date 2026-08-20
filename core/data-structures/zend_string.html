@@ -187,8 +187,7 @@ append enough bytes to the allocation to hold the strings content.</p>
 <p><code class="docutils literal notranslate"><span class="pre">ZSTR_INIT_LITERAL</span></code> creates a <code class="docutils literal notranslate"><span class="pre">zend_string</span></code> from a string literal. It is just a wrapper around
 <code class="docutils literal notranslate"><span class="pre">zend_string_init(char</span> <span class="pre">*string,</span> <span class="pre">size_t</span> <span class="pre">length,</span> <span class="pre">bool</span> <span class="pre">persistent)</span></code> that provides the length of the
 string at compile time. The <code class="docutils literal notranslate"><span class="pre">persistent</span></code> parameter indicates whether the string is allocated using
-<code class="docutils literal notranslate"><span class="pre">malloc</span></code> (<code class="docutils literal notranslate"><span class="pre">persistent</span> <span class="pre">==</span> <span class="pre">true</span></code>) or <code class="docutils literal notranslate"><span class="pre">emalloc</span></code>, PHP’s custom allocator (<code class="docutils literal notranslate"><span class="pre">persistent</span> <span class="pre">==</span> <span class="pre">false</span></code>) that is
-emptied after each request.</p>
+<code class="docutils literal notranslate"><span class="pre">malloc</span></code> (<code class="docutils literal notranslate"><span class="pre">persistent</span> <span class="pre">==</span> <span class="pre">true</span></code>) or <code class="docutils literal notranslate"><span class="pre">emalloc</span></code>, PHP’s custom allocator (<code class="docutils literal notranslate"><span class="pre">persistent</span> <span class="pre">==</span> <span class="pre">false</span></code>) that is emptied after each request.</p>
 <p>When you’re done using the string, you must call <code class="docutils literal notranslate"><span class="pre">zend_string_release</span></code>, or the memory will leak.
 <code class="docutils literal notranslate"><span class="pre">zend_string_release</span></code> will automatically call <code class="docutils literal notranslate"><span class="pre">malloc</span></code> or <code class="docutils literal notranslate"><span class="pre">emalloc</span></code>, depending on how the
 string was allocated. After releasing the string, you must not access any of its fields anymore, as
@@ -197,7 +196,8 @@ it may have been freed if you were its last user.</p>
 <h2>API<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#api" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#api'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <p>The string API is defined in <code class="docutils literal notranslate"><span class="pre">Zend/zend_string.h</span></code>. It provides a number of functions for creating
 new strings.</p>
-<p><strong><code class="docutils literal notranslate"><span class="pre">zend_string</span></code> creation</strong></p>
+<section id="zend-string-creation">
+<h3><code class="docutils literal notranslate"><span class="pre">zend_string</span></code> Creation<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#zend-string-creation" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#zend-string-creation'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function/Macro <a class="footnote-reference brackets" href="#persistent" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></th>
@@ -234,7 +234,9 @@ new strings.</p>
 <p>As per php-src fashion, you are not supposed to access the <code class="docutils literal notranslate"><span class="pre">zend_string</span></code> fields directly. Instead,
 use the following macros. There are macros for both <code class="docutils literal notranslate"><span class="pre">zend_string</span></code> and <code class="docutils literal notranslate"><span class="pre">zvals</span></code> known to contain
 strings.</p>
-<p><strong>Accessor macros</strong></p>
+</section>
+<section id="accessor-macros">
+<h3>Accessor Macros<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#accessor-macros" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#accessor-macros'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">zend_string</span></code></p></th>
@@ -261,7 +263,9 @@ strings.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Reference counting macros</strong></p>
+</section>
+<section id="reference-counting-macros">
+<h3>Reference Counting Macros<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#reference-counting-macros" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#reference-counting-macros'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Macro</p></th>
@@ -291,6 +295,7 @@ strings in full, while <code class="docutils literal notranslate"><span class="p
 second. There are variations for <code class="docutils literal notranslate"><span class="pre">_ci</span></code> and <code class="docutils literal notranslate"><span class="pre">_literal</span></code>, i.e. case-insensitive comparison and
 literal strings, respectively. We won’t go over all variations here, as they are straightforward to
 use.</p>
+</section>
 </section>
 <section id="interned-strings">
 <h2>Interned strings<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#interned-strings" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#interned-strings'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
@@ -350,7 +355,12 @@ Usually you don’t have to worry about this.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#api'" class="reference internal" href="#api">API</a></li>
+<li><a :data-current="activeSection === '#api'" class="reference internal" href="#api">API</a><ul>
+<li><a :data-current="activeSection === '#zend-string-creation'" class="reference internal" href="#zend-string-creation"><code class="docutils literal notranslate"><span class="pre">zend_string</span></code> Creation</a></li>
+<li><a :data-current="activeSection === '#accessor-macros'" class="reference internal" href="#accessor-macros">Accessor Macros</a></li>
+<li><a :data-current="activeSection === '#reference-counting-macros'" class="reference internal" href="#reference-counting-macros">Reference Counting Macros</a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#interned-strings'" class="reference internal" href="#interned-strings">Interned strings</a></li>
 </ul>
 </div>

@@ -217,15 +217,13 @@ Additional meta information can be attached to functions, with the following PHP
   PHP 8.4 the `#[Deprecated]` attribute should be used instead.
 
 - `@alias`: If a function/method is an alias of another function/method, then the aliased
-  function/method name has to be provided as value. E.g. the function `sizeof()` has the `@alias
-  count` annotation.
+  function/method name has to be provided as value. E.g. the function `sizeof()` has the `@alias count` annotation.
 
 - `@implementation-alias`: This is very similar to `@alias` with some semantic differences.
   These aliases exists purely to avoid duplicating some code, but there is no other connection
   between the alias and the aliased function or method.
 
-  A notable example is `Error::getCode()`, which has the `@implementation-alias
-  Exception::getCode` annotation.
+  A notable example is `Error::getCode()`, which has the `@implementation-alias Exception::getCode` annotation.
 
   The difference between `@alias` and `@implementation-alias` is very nuanced and is only
   observable in the manual.
@@ -365,8 +363,7 @@ static zend_class_entry *register_class_Elephant(zend_class_entry *class_entry_s
 
 ## Generating Global Constants and Attributes
 
-Although global constants and function attributes do not relate to classes, they require the `/**
-@generate-class-entries */` file-level PHPDoc block.
+Although global constants and function attributes do not relate to classes, they require the `/** @generate-class-entries */` file-level PHPDoc block.
 
 If a global constant or function attribute are present in the stub file, the generated C-code will
 include a `register_{$stub_file_name}_symbols()` file.
@@ -605,8 +602,7 @@ passed parameters—if the number of passed arguments is known at compile-time.
 To take advantage of frameless functions, add the `@frameless-function` PHPDoc tag with some
 configuration.
 
-Since only arity-based optimizations are supported, the tag has the form: `@frameless-function
-{"arity": NUM}`. `NUM` is the number of parameters for which a frameless function is available.
+Since only arity-based optimizations are supported, the tag has the form: `@frameless-function {"arity": NUM}`. `NUM` is the number of parameters for which a frameless function is available.
 
 The stub of `in_array()` is a good example:
 
@@ -667,8 +663,7 @@ the process of synchronization.
 Newly added functions or methods can be documented by providing the `--generate-methodsynopses`
 option.
 
-Running `./build/gen_stub.php --generate-methodsynopses ./ext/mbstring
-../doc-en/reference/mbstring` will create a dedicated page for each `ext/mbstring` function which
+Running `./build/gen_stub.php --generate-methodsynopses ./ext/mbstring ../doc-en/reference/mbstring` will create a dedicated page for each `ext/mbstring` function which
 is not yet documented, and saves them into the `../doc-en/reference/mbstring/functions` directory.
 
 Since these are stub documentation pages, many of the sections are empty. Relevant descriptions have
@@ -716,8 +711,7 @@ function bzwrite($bz, string $data, ?int $length = null): int|false {}
 
 Besides aliases, the contents of the documentation can also be validated by providing the
 `--verify-manual` option to `gen_stub.php`. This flag requires the directory with the source
-stubs, and the target manual directory, as in `./build/gen_stub.php --verify-manual ./
-../doc-en/`.
+stubs, and the target manual directory, as in `./build/gen_stub.php --verify-manual ./ ../doc-en/`.
 
 For this validation, all `php-src` stubs and the full English documentation should be available by
 the specified path.

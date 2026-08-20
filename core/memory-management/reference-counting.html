@@ -208,7 +208,8 @@ under <a class="reference internal" href="#gc-flags">GC flags</a>.</p>
 use the provided macros. There are macros that work with reference counted types directly, prefixed
 with <code class="docutils literal notranslate"><span class="pre">GC_</span></code>, or macros that work on <code class="docutils literal notranslate"><span class="pre">zval</span></code> values, usually prefixed with <code class="docutils literal notranslate"><span class="pre">Z_</span></code>. Unfortunately,
 naming is not always consistent.</p>
-<p><strong><code class="docutils literal notranslate"><span class="pre">zval</span></code> macros</strong></p>
+<section id="zval-reference-counting-macros">
+<h3><code class="docutils literal notranslate"><span class="pre">zval</span></code> Reference Counting Macros<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#zval-reference-counting-macros" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#zval-reference-counting-macros'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Macro</p></th>
@@ -235,7 +236,9 @@ naming is not always consistent.</p>
 </tr>
 </tbody>
 </table>
-<p><strong><code class="docutils literal notranslate"><span class="pre">zend_refcounted_h</span></code> macros</strong></p>
+</section>
+<section id="zend-refcounted-h-macros">
+<h3><code class="docutils literal notranslate"><span class="pre">zend_refcounted_h</span></code> Macros<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#zend-refcounted-h-macros" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#zend-refcounted-h-macros'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Macro</p></th>
@@ -262,6 +265,7 @@ naming is not always consistent.</p>
 </tr>
 </tbody>
 </table>
+</section>
 </section>
 <section id="separation">
 <h2>Separation<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#separation" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#separation'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
@@ -375,7 +379,11 @@ no-op. If it does not, using the macro on these values is undefined behavior.</p
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#macros'" class="reference internal" href="#macros">Macros</a></li>
+<li><a :data-current="activeSection === '#macros'" class="reference internal" href="#macros">Macros</a><ul>
+<li><a :data-current="activeSection === '#zval-reference-counting-macros'" class="reference internal" href="#zval-reference-counting-macros"><code class="docutils literal notranslate"><span class="pre">zval</span></code> Reference Counting Macros</a></li>
+<li><a :data-current="activeSection === '#zend-refcounted-h-macros'" class="reference internal" href="#zend-refcounted-h-macros"><code class="docutils literal notranslate"><span class="pre">zend_refcounted_h</span></code> Macros</a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#separation'" class="reference internal" href="#separation">Separation</a></li>
 <li><a :data-current="activeSection === '#immutable-reference-counted-types'" class="reference internal" href="#immutable-reference-counted-types">Immutable reference counted types</a></li>
 <li><a :data-current="activeSection === '#cycle-collector'" class="reference internal" href="#cycle-collector">Cycle collector</a></li>

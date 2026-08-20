@@ -1,8 +1,9 @@
 # Writing Tests
 
 ```{toctree}
-:hidden: true
-
+---
+hidden: true
+---
 Basics <self>
 sections/index
 samples/index

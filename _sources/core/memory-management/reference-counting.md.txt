@@ -68,7 +68,7 @@ use the provided macros. There are macros that work with reference counted types
 with `GC_`, or macros that work on `zval` values, usually prefixed with `Z_`. Unfortunately,
 naming is not always consistent.
 
-**`zval` macros**
+### `zval` Reference Counting Macros
 
 | Macro              | Non-RC [^non-rc] | Description                                                                            |
 | ------------------ | ---------------- | -------------------------------------------------------------------------------------- |
@@ -77,10 +77,7 @@ naming is not always consistent.
 | `Z_TRY_ADDREF[_P]` | Yes              | Increases the reference count. May be called on any `zval`.                            |
 | `zval_ptr_dtor`    | Yes              | Decreases the reference count and frees the value if the reference count reaches zero. |
 
-[^non-rc]: Whether the macro works with non-reference counted types. If it does, the operation is usually a
-    no-op. If it does not, using the macro on these values is undefined behavior.
-
-**`zend_refcounted_h` macros**
+### `zend_refcounted_h` Macros
 
 | Macro               | Immutable [^immutable] | Description                                                                            |
 | ------------------- | ---------------------- | -------------------------------------------------------------------------------------- |
@@ -88,8 +85,6 @@ naming is not always consistent.
 | `GC_ADDREF[_P]`     | No                     | Increases the reference count.                                                         |
 | `GC_TRY_ADDREF[_P]` | Yes                    | Increases the reference count.                                                         |
 | `GC_DTOR[_P]`       | Yes                    | Decreases the reference count and frees the value if the reference count reaches zero. |
-
-[^immutable]: Whether the macro works with immutable types, described under [Immutable reference counted types](#immutable-reference-counted-types).
 
 ## Separation
 
@@ -180,3 +175,8 @@ being freed at the end of the request.
 The `GC_PERSISTENT_LOCAL` flag indicates that a `GC_PERSISTENT` value is only accessible in one
 thread, and is thus still safe to modify. This flag is only used in debug builds to satisfy an
 `assert`.
+
+[^non-rc]: Whether the macro works with non-reference counted types. If it does, the operation is usually a
+    no-op. If it does not, using the macro on these values is undefined behavior.
+
+[^immutable]: Whether the macro works with immutable types, described under [Immutable reference counted types](#immutable-reference-counted-types).

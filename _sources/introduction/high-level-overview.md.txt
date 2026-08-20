@@ -129,8 +129,7 @@ Here's what the surprisingly compact opcodes for the AST above might look like:
 
 Finally, the opcodes are read and executed by the interpreter. PHPs uses [three-address code](https://en.wikipedia.org/wiki/Three-address_code) for
 instructions. This essentially means that each instructions may have a result value, and at most two
-operands. Most modern CPUs also use this format. Both result and operands in PHP are {doc}`zvals
-<../core/data-structures/zval>`.
+operands. Most modern CPUs also use this format. Both result and operands in PHP are {doc}`zvals <../core/data-structures/zval>`.
 
 How exactly each opcode behaves depends on its purpose. You can find a complete list of opcodes in
 the generated `Zend/zend_vm_opcodes.h` file. The behavior of each instruction is defined in

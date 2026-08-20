@@ -1,8 +1,9 @@
 # Bundled Extensions
 
 ```{toctree}
-:hidden: true
-
+---
+hidden: true
+---
 bundled-extensions/filter
 ```
 

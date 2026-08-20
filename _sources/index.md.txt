@@ -1,17 +1,19 @@
 # php-src docs
 
 ```{toctree}
-:caption: Introduction
-:hidden: true
-
+---
+caption: Introduction
+hidden: true
+---
 introduction/high-level-overview
 introduction/ides/index
 ```
 
 ```{toctree}
-:caption: Core
-:hidden: true
-
+---
+caption: Core
+hidden: true
+---
 core/data-structures/index
 core/memory-management/index
 core/output-buffering
@@ -19,26 +21,29 @@ core/streams/index
 ```
 
 ```{toctree}
-:caption: Extensions
-:hidden: true
-
+---
+caption: Extensions
+hidden: true
+---
 extensions/parameter-parsing
 extensions/bundled-extensions
 extensions/unbundled-extensions
 ```
 
 ```{toctree}
-:caption: Testing
-:hidden: true
-
+---
+caption: Testing
+hidden: true
+---
 testing/running-tests/index
 testing/writing-tests/index
 ```
 
 ```{toctree}
-:caption: Miscellaneous
-:hidden: true
-
+---
+caption: Miscellaneous
+hidden: true
+---
 miscellaneous/stubs
 ```
 

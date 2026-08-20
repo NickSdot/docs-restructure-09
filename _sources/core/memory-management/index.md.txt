@@ -1,8 +1,9 @@
 # Memory Management
 
 ```{toctree}
-:hidden: true
-
+---
+hidden: true
+---
 reference-counting
 ```
 
